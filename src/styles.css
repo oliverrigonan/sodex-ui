@@ -13,11 +13,13 @@ body {
 
 .home-container-custom-size {
     margin-top: 72px;
+    border: none;
 }
 
 .software-navbar-custom-size {
     height: 45px;
-    box-shadow: 7px 1px 15px 0px #888888;
+    /* box-shadow: 7px 1px 15px 0px #888888; */
+    border-bottom: 1px solid rgb(199, 199, 199);
     font-size: 14px;
     background-color: #ffffff;
 }
@@ -27,11 +29,13 @@ body {
 }
 
 .side-nav-container {
-    margin-top: 47.5px;
+    margin-top: 45px;
     height: calc(100vh - 50px);
 }
 
 .side-nav-drawer {
+    margin-top: -8px;
+    padding-top: 0px;
     width: 300px;
 }
 
@@ -41,4 +45,12 @@ body {
 
 .img-icon-styles {
     height: 100px;
+}
+
+.mat-nav-list-a-style {
+    padding-left: 18px;
+}
+
+.mat-nav-list-a-style img {
+    height: 25px;
 }

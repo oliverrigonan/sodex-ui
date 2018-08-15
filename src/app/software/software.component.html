@@ -35,7 +35,52 @@
 </nav>
 <mat-drawer-container class="side-nav-container" [hasBackdrop]="true">
     <mat-drawer class="side-nav-drawer" #drawer [mode]="over">
-        Menu
+        <mat-nav-list>
+            <a mat-list-item routerLink="/software">
+                <span class="mat-nav-list-a-style">
+                    <img src="../../assets/images/icons/home.png"> &nbsp;&nbsp; Main Menu
+                </span>
+            </a>
+            <mat-divider></mat-divider>
+            <label mat-subheader> &nbsp;&nbsp;&nbsp; Setup</label>
+            <a mat-list-item routerLink="/software/profile">
+                <span class="mat-nav-list-a-style">
+                    <img src="../../assets/images/icons/profile.png"> &nbsp;&nbsp; Profile
+                </span>
+            </a>
+            <a mat-list-item routerLink="">
+                <span class="mat-nav-list-a-style">
+                    <img src="../../assets/images/icons/cards.png"> &nbsp;&nbsp; Cards
+                </span>
+            </a>
+            <mat-divider></mat-divider>
+            <label mat-subheader> &nbsp;&nbsp;&nbsp; Transaction</label>
+            <a mat-list-item routerLink="">
+                <span class="mat-nav-list-a-style">
+                    <img src="../../assets/images/icons/transfer.png"> &nbsp;&nbsp; Transfer
+                </span>
+            </a>
+            <a mat-list-item routerLink="">
+                <span class="mat-nav-list-a-style">
+                    <img src="../../assets/images/icons/check-balance.png"> &nbsp;&nbsp; Check Balance
+                </span>
+            </a>
+            <mat-divider></mat-divider>
+            <label mat-subheader> &nbsp;&nbsp;&nbsp; Reports</label>
+            <a mat-list-item routerLink="">
+                <span class="mat-nav-list-a-style">
+                    <img src="../../assets/images/icons/reports.png"> &nbsp;&nbsp; Ledger
+                </span>
+            </a>
+            <mat-divider></mat-divider>
+            <label mat-subheader> &nbsp;&nbsp;&nbsp; Admin</label>
+            <a mat-list-item routerLink="">
+                <span class="mat-nav-list-a-style">
+                    <img src="../../assets/images/icons/users.png"> &nbsp;&nbsp; Users
+                </span>
+            </a>
+            <mat-divider></mat-divider>
+        </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content>
         <mat-toolbar class="mat-tool-bar-styles">
@@ -44,7 +89,7 @@
                     <i class="fa fa-bars"></i>
                 </button>
                 &nbsp;
-                <span>Software Dashboard</span>
+                <span>{{ ToolbarTitle }}</span>
             </div>
         </mat-toolbar>
         <div class="container-fluid">
