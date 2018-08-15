@@ -1,0 +1,54 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-light software-navbar-custom-size">
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/home">Sodex</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Support</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Current User</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-power-off"></i>
+                        </a>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</nav>
+<mat-drawer-container class="side-nav-container" [hasBackdrop]="true">
+    <mat-drawer class="side-nav-drawer" #drawer [mode]="over">
+        Menu
+    </mat-drawer>
+    <mat-drawer-content>
+        <mat-toolbar class="mat-tool-bar-styles">
+            <div class="container-fluid">
+                <button type="button" class="btn btn-info" (click)="drawer.toggle()">
+                    <i class="fa fa-bars"></i>
+                </button>
+                &nbsp;
+                <span>Software Dashboard</span>
+            </div>
+        </mat-toolbar>
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
