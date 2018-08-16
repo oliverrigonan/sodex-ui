@@ -17,6 +17,13 @@
     </div>
     <div class="card-body">
       <div class="row">
+        <div class="col-md-6">
+          <div class="form-container">
+            <mat-form-field>
+              <input matInput placeholder="Card Number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+            </mat-form-field>
+          </div>
+        </div>
         <div class="col-md-3">
           <div class="form-container">
             <mat-form-field>
@@ -32,13 +39,6 @@
               <input matInput [matDatepicker]="dateEndPicker" placeholder="Date End">
               <mat-datepicker-toggle matSuffix [for]="dateEndPicker"></mat-datepicker-toggle>
               <mat-datepicker #dateEndPicker></mat-datepicker>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-container">
-            <mat-form-field>
-              <input matInput placeholder="Card Number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
             </mat-form-field>
           </div>
         </div>

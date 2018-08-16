@@ -1,0 +1,50 @@
+ header.masthead {
+    position: relative;
+    background-color: #343a40;
+    background: url("../../assets/images/cover/bg.jpg") no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    padding-top: 12rem;
+    padding-bottom: 8rem;
+    height: calc(100vh);
+  }
+  
+  header.masthead .overlay {
+    position: absolute;
+    background-color: #000000;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.6;
+  }
+  
+  .problem-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background-color: white;
+  }
+  
+  .what-is-sodex-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    color: #dadada;
+    background-color: black;
+    text-align: justify;
+  }
+
+  .sodex-steps {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    background-color: white;
+    text-align: justify;
+  }
+
+  .footer-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    background-color: #dddddd;
+    text-align: center;
+  }

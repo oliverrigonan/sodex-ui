@@ -1,7 +1,9 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-light software-navbar-custom-size">
     <div class="container-fluid">
-        <a class="navbar-brand" routerLink="/home">
-            <img src="../../assets/images/logo/logo.png" class="software-navbar-brand-style"/>
+        <a class="navbar-brand" style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;color: rgb(53, 53, 53); font-size: 20px;"
+            routerLink="/home">
+            SODE
+            <span style="color: rgb(184, 0, 0)">X</span>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +46,7 @@
                 </span>
             </a>
             <mat-divider></mat-divider>
-            <label mat-subheader style="color: #dadada"> &nbsp;&nbsp;&nbsp; Setup</label>
+            <label mat-subheader> &nbsp;&nbsp;&nbsp; Setup</label>
             <a mat-list-item routerLink="/software/profile">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/profile.png"> &nbsp;&nbsp; Profile
@@ -56,7 +58,7 @@
                 </span>
             </a>
             <mat-divider></mat-divider>
-            <label mat-subheader style="color: #dadada"> &nbsp;&nbsp;&nbsp; Transaction</label>
+            <label mat-subheader> &nbsp;&nbsp;&nbsp; Transaction</label>
             <a mat-list-item routerLink="/software/transfer">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/transfer.png"> &nbsp;&nbsp; Transfer
@@ -68,14 +70,14 @@
                 </span>
             </a>
             <mat-divider></mat-divider>
-            <label mat-subheader style="color: #dadada"> &nbsp;&nbsp;&nbsp; Reports</label>
+            <label mat-subheader> &nbsp;&nbsp;&nbsp; Reports</label>
             <a mat-list-item routerLink="/software/reports">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/reports.png"> &nbsp;&nbsp; Ledger
                 </span>
             </a>
             <mat-divider></mat-divider>
-            <label mat-subheader style="color: #dadada"> &nbsp;&nbsp;&nbsp; Admin</label>
+            <label mat-subheader> &nbsp;&nbsp;&nbsp; Admin</label>
             <a mat-list-item routerLink="/software/users">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/users.png"> &nbsp;&nbsp; Users
@@ -87,7 +89,7 @@
     <mat-drawer-content style="background-color: #ffffff;">
         <mat-toolbar class="mat-tool-bar-styles">
             <div class="container-fluid">
-                <button type="button" class="btn btn-info" (click)="openDrawer()">
+                <button type="button" class="btn" (click)="openDrawer()">
                     <i class="fa fa-bars"></i>
                 </button>
                 &nbsp;

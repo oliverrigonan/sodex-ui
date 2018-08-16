@@ -13,7 +13,7 @@ export class TransferComponent implements OnInit {
   constructor(private modalService: BsModalService) { }
 
   public openTransferModal(template: TemplateRef<any>): void {
-    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+    this.modalRef = this.modalService.show(template);
   }
 
   ngOnInit() {

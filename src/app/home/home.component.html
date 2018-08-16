@@ -1,15 +1,17 @@
 <nav class="navbar fixed-top navbar-expand-lg navbar-light home-navbar-custom-size">
   <div class="container">
-    <a class="navbar-brand" href="#">
-        <img src="../../assets/images/logo/logo.png" class="home-navbar-brand-style"/>
+    <a style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;color: rgb(53, 53, 53); font-size: 35px;"
+      class="navbar-brand" routerLink="/home">
+      SODE
+      <span style="color: rgb(184, 0, 0)">X</span>
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-      aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler " type="button " data-toggle="collapse " data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent "
+      aria-expanded="false " aria-label="Toggle navigation ">
+      <span class="navbar-toggler-icon "></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent ">
+      <ul class="navbar-nav mr-auto ">
         <li class="nav-item">
           <a class="nav-link nav-link-home" href="#">About</a>
         </li>
@@ -20,14 +22,14 @@
           <a class="nav-link nav-link-home" href="#">Support</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <ul class="navbar-nav mr-auto">
+      <form class="form-inline my-2 my-lg-0 ">
+        <ul class="navbar-nav mr-auto ">
           <li class="nav-item">
-            <a class="nav-link nav-link-home" href="#">Current User</a>
+            <a class="nav-link nav-link-home" routerLink="/software">Current User</a>
           </li>
           <li class="nav-item">
             <a class="nav-link nav-link-home" href="#">
-              <i class="fa fa-power-off"></i>
+              <i class="fa fa-power-off "></i>
             </a>
           </li>
         </ul>
@@ -35,6 +37,159 @@
     </div>
   </div>
 </nav>
-<div class="container-fluid home-container-custom-size">
-  <a routerLink="/software">Software</a>
-</div>
+
+<header class="masthead text-white text-center ">
+  <div class="overlay "></div>
+  <div class="container ">
+    <div class="row ">
+      <div class="col-xl-9 mx-auto ">
+        <br />
+        <br />
+        <img src="../../assets/images/logo/logo.png " />
+        <br />
+        <p class="lead " style="font-size: 30px; ">
+          Simplified payment using Blockchain.
+        </p>
+      </div>
+      <div class="col-md-10 col-lg-8 col-xl-7 mx-auto ">
+        <br />
+        <br />
+        <button type="submit " class="btn btn-lg btn-primary " routerLink="/software">Get Started</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="problem-section">
+  <div class="container ">
+    <div class="row">
+      <div class="col-md-7">
+        <p class="lead" style="font-size: 30px;">
+          Problems using paper money.
+        </p>
+        <br />
+        <p class="lead">Lack of change. Coins and lower denomination is hard to get nowadays.</p>
+        <p class="lead">Small denomination spoilage. Inflation devaluates coins, that is why we do not carry them anymore.</p>
+        <p class="lead">Slower transactions. Counting paper money and coins takes up time.</p>
+        <p class="lead">Bulky to carry. Since the value of paper money is getting lower we tend to carry more.</p>
+        <br />
+        <button type="button" class="btn btn-outline-warning btn-lg">
+          <i class="fa fa-download fa-fw"></i> Download Whitepaper
+        </button>
+      </div>
+      <div class="col-md-5" style="padding: 50px;">
+        <img src="../../assets/images/section/moneypaper.jpg" class="img-thumbnail" style="border: none;"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="what-is-sodex-section">
+  <div class="container">
+    <p class="lead" style="font-size: 30px; color: white;">
+      What is SODE
+      <span style="color: rgb(184, 0, 0)">X</span>?
+    </p>
+    <br />
+    <p class="lead">
+      SODE
+      <span style="color: rgb(184, 0, 0)">X</span> is a simplified online payment using Blockchain.
+    </p>
+    <p class="lead">
+      Greater transparency. Transaction histories are becoming more transparent through the use of blockchain technology. Because
+      blockchain is a type of distributed ledger, all network participants share the same documentation as opposed to individual
+      copies. That shared version can only be updated through consensus, which means everyone must agree on it.
+    </p>
+    <p class="lead">
+      Enhanced security. There are several ways blockchain is more secure than other record-keeping systems. Transactions must
+      be agreed upon before they are recorded. After a transaction is approved, it is encrypted and linked to the previous
+      transaction. This, along with the fact that information is stored across a network of computers instead of on a single
+      server, makes it very difficult for hackers to compromise the transaction data.
+    </p>
+    <p class="lead">
+      Improved traceability. If your company deals with products that are traded through a complex supply chain, you’re familiar
+      with how hard it can be to trace an item back to its origin. When exchanges of goods are recorded on a blockchain,
+      you end up with an audit trail that shows where an asset came from and every stop it made on its journey.
+    </p>
+    <p class="lead">
+      Increased efficiency and speed. When you use traditional, paper-heavy processes, trading anything is a time-consuming process
+      that is prone to human error and often requires third-party mediation. By streamlining and automating these processes
+      with blockchain, transactions can be completed faster and more efficiently.
+    </p>
+    <p class="lead">
+      Reduced costs. For most businesses, reducing costs is a priority. With blockchain, you don’t need as many third parties or
+      middlemen to make guarantees because it doesn’t matter if you can trust your trading partner. Instead, you just have
+      to trust the data on the blockchain.
+    </p>
+    <br />
+    <button type="button" class="btn btn-outline-danger btn-lg">
+      <i class="fa fa-download fa-fw"></i> Download Whitepaper
+    </button>
+  </div>
+</section>
+
+<section class="sodex-steps">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <p class="lead" style="font-size: 30px;">
+          <i class="fa fa-credit-card fa-fw"></i> SODE
+          <span style="color: rgb(184, 0, 0)">X</span> Card
+        </p>
+        <br />
+        <p class="lead">
+          SODE
+          <span style="color: rgb(184, 0, 0)">X</span> Cards are plastic cards linked to the user's wallet address, which enable the cardholder to use the sodex
+          available on his/her address. This is used to exchange to peso from his/her sodex balance as well as to make non-cash
+          or online payment for products/services.
+        </p>
+        <br />
+        <p class="lead">
+          <i class="fa fa-check fa-fw" style="color: rgb(0, 184, 61)"></i> &nbsp; STEP 1: Get a card.
+        </p>
+        <p class="lead">
+          <i class="fa fa-check fa-fw" style="color: rgb(0, 184, 61)"></i> &nbsp; STEP 2: Buy SODE
+          <span style="color: rgb(184, 0, 0)">X</span>.
+        </p>
+        <p class="lead">
+          <i class="fa fa-check fa-fw" style="color: rgb(0, 184, 61)"></i> &nbsp; STEP 3: Start buying using SODE
+          <span style="color: rgb(184, 0, 0)">X</span>.
+        </p>
+        <p class="lead">
+          <i class="fa fa-check fa-fw" style="color: rgb(0, 184, 61)"></i> &nbsp; STEP 4: Register your card.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <p class="lead" style="font-size: 30px;">
+          <i class="fa fa-mobile fa-fw"></i> SODE
+          <span style="color: rgb(184, 0, 0)">X</span> Mobile
+        </p>
+        <br />
+        <p class="lead">
+          SODE X Mobile is a virtual wallet that stores user's wallet address on a mobile device. It is a convenient way for a user
+          to make in-store payments and can be used at merchants listed with the mobile service provider.
+        </p>
+        <br />
+        <p class="lead">
+          <i class="fa fa-check fa-fw" style="color: rgb(0, 184, 61)"></i> &nbsp; STEP 1: Install SODE
+          <span style="color: rgb(184, 0, 0)">X</span> app into your mobile device.
+        </p>
+        <p class="lead">
+          <i class="fa fa-check fa-fw" style="color: rgb(0, 184, 61)"></i> &nbsp; STEP 2: Buy SODE
+          <span style="color: rgb(184, 0, 0)">X</span>.
+        </p>
+        <p class="lead">
+          <i class="fa fa-check fa-fw" style="color: rgb(0, 184, 61)"></i> &nbsp; STEP 3: Start buying using SODE
+          <span style="color: rgb(184, 0, 0)">X</span>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer-section">
+  <div class="container">
+    © 2018, SODE
+    <span style="color: rgb(184, 0, 0)">X</span>.IO VERSION 1.1
+  </div>
+</footer>
