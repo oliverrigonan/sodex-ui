@@ -6,9 +6,28 @@ body {
 }
 
 .home-navbar-custom-size {
-    height: 72px;
     box-shadow: 7px 1px 15px 0px #888888;
-    background-color: #ffffff;
+    background-color: #1f3d7a;
+    color: white;
+    padding: 0 1rem !important;
+    border: none !important;
+}
+
+@media (max-width: 992px) {
+    .home-navbar-custom-size {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+}
+
+.nav-link-home {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    color: white !important;
+}
+
+.nav-link-home:hover {
+    background: #2a52a2 !important;
 }
 
 .home-container-custom-size {
@@ -17,15 +36,34 @@ body {
 }
 
 .software-navbar-custom-size {
-    height: 45px;
     box-shadow: 0px 0px 5px 0px #4b4b4b;
-    border-bottom: none;
     font-size: 14px;
-    background-color: #ffffff;
+    background-color: #1f3d7a;
+    color: white;
+    padding: 0 1rem !important;
+    border: none !important;
+}
+
+.nav-link-software {
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    color: white !important;
+}
+
+.nav-link-software:hover {
+    background: #2a52a2 !important;
+}
+
+@media (max-width: 992px) {
+    .software-navbar-custom-size {
+        padding-top: 2.5px !important;
+        padding-bottom: 2.5px !important;
+    }
 }
 
 .navbar > .navbar-brand {
     font-size: 16px;
+    color: white !important;
 }
 
 .side-nav-container {
@@ -36,7 +74,7 @@ body {
 .side-nav-drawer {
     padding-top: 0px;
     width: 300px;
-    background-color: #008080;
+    background-color: #006666;
 }
 
 .mat-tool-bar-styles {
@@ -67,4 +105,14 @@ body {
 
 .form-container > * {
     width: 100%;
-  }
+}
+
+.software-navbar-brand-style {
+    margin-top: -8px;
+    height: 25px;
+}
+
+.home-navbar-brand-style {
+    margin-top: -8px;
+    height: 35px;
+}
