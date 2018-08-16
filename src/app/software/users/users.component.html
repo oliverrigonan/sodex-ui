@@ -1,9 +1,140 @@
 <div class="container-fluid">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <a routerLink="/software">Home</a>
-      </li>
-      <li class="breadcrumb-item active">Users</li>
-    </ol>
-  
-  </div>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/software">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Users</li>
+  </ol>
+  <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)" (selectedTabChange)="onUserTabClick($event)">
+    <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+      <br />
+
+      <div *ngIf="showUserListTab">
+        <div class="card card-default">
+          <div class="card-header" align="right">
+            <button type="button" class="btn btn-primary" style="margin-right: 5px;" (click)="newUserTab(false)">
+              <i class="fa fa-edit fa-fw"></i>Edit
+            </button>
+            <button type="button" class="btn btn-danger" routerLink="/software">
+              <i class="fa fa-close fa-fw"></i>Close
+            </button>
+          </div>
+          <div class="card-body">
+
+          </div>
+          <div class="card-footer">
+            <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
+              <button type="button" class="btn btn-secondary" (click)="UsersCollectionView.moveToFirstPage()">
+                <i class="fa fa-fast-backward"></i>
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="UsersCollectionView.moveToPreviousPage()">
+                <i class="fa fa-step-backward"></i>
+              </button>
+              <button type="button" class="btn btn-secondary" disabled style="width:100px">
+                <!-- {{ UsersCollectionView.pageIndex + 1 }} / {{ UsersCollectionView.pageCount }} -->
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="UsersCollectionView.moveToNextPage()">
+                <i class="fa fa-step-forward"></i>
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="UsersCollectionView.moveToLastPage()">
+                <i class="fa fa-fast-forward"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="showUserDetailTab">
+        <div class="card card-default">
+          <div class="card-header" align="right">
+              <button type="button" class="btn btn-info" style="margin-right: 5px;">
+                <i class="fa fa-lock fa-fw"></i>Change Password
+              </button>
+            <button type="button" class="btn btn-primary" style="margin-right: 5px;">
+              <i class="fa fa-save fa-fw"></i>Save
+            </button>
+            <button type="button" class="btn btn-primary" style="margin-right: 5px;">
+              <i class="fa fa-edit fa-fw"></i>Edit
+            </button>
+            <button type="button" class="btn btn-danger" (click)="removeUserTab(index)">
+              <i class="fa fa-close fa-fw"></i>Close
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <div class="form-container">
+                  <mat-form-field>
+                    <input matInput placeholder="Username" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="Name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="Email Address" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="User Type" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-container">
+                  <mat-form-field>
+                    <textarea matInput placeholder="Address" rows="5" style="height: 87px; resize: none;" autocomplete="off" autocorrect="off"
+                      autocapitalize="off" spellcheck="false"></textarea>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="Contact Number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="Status" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br />
+
+        <mat-tab-group>
+          <mat-tab label="User Rights">
+            <br />
+
+            <div class="card card-default">
+              <div class="card-header" align="right">
+                <button type="button" class="btn btn-primary">
+                  <i class="fa fa-plus fa-fw"></i>Add
+                </button>
+              </div>
+              <div class="card-body">
+
+              </div>
+              <div class="card-footer">
+                <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
+                  <button type="button" class="btn btn-secondary" (click)="UserRightsCollectionView.moveToFirstPage()">
+                    <i class="fa fa-fast-backward"></i>
+                  </button>
+                  <button type="button" class="btn btn-secondary" (click)="UserRightsCollectionView.moveToPreviousPage()">
+                    <i class="fa fa-step-backward"></i>
+                  </button>
+                  <button type="button" class="btn btn-secondary" disabled style="width:100px">
+                    <!-- {{ UserRightsCollectionView.pageIndex + 1 }} / {{ UserRightsCollectionView.pageCount }} -->
+                  </button>
+                  <button type="button" class="btn btn-secondary" (click)="UserRightsCollectionView.moveToNextPage()">
+                    <i class="fa fa-step-forward"></i>
+                  </button>
+                  <button type="button" class="btn btn-secondary" (click)="UserRightsCollectionView.moveToLastPage()">
+                    <i class="fa fa-fast-forward"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+  <br />
+</div>

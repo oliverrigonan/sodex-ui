@@ -1,9 +1,53 @@
 <div class="container-fluid">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a routerLink="/software">Home</a>
+        <a routerLink="/software">Dashboard</a>
       </li>
       <li class="breadcrumb-item active">Check Balance</li>
     </ol>
   
+    <div class="card card-default">
+      <div class="card-header" align="right">
+        <button type="button" class="btn btn-primary" style="margin-right: 5px;">
+          <i class="fa fa-check fa-fw"></i>Check Balance
+        </button>
+        <button type="button" class="btn btn-danger" routerLink="/software">
+          <i class="fa fa-close fa-fw"></i>Close
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <div class="form-container">
+              <mat-form-field>
+                <input matInput placeholder="Card Number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Email Address" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Balance" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-container">
+              <mat-form-field>
+                <textarea matInput placeholder="Address" rows="5" style="height: 87px;" autocomplete="off" autocorrect="off" autocapitalize="off"
+                  spellcheck="false"></textarea>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Contact Number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Status" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>

@@ -33,48 +33,48 @@
         </div>
     </div>
 </nav>
-<mat-drawer-container class="side-nav-container" [hasBackdrop]="true">
-    <mat-drawer class="side-nav-drawer" #drawer [mode]="over">
+<mat-drawer-container class="side-nav-container">
+    <mat-drawer class="side-nav-drawer" #drawer [mode]="'side'">
         <mat-nav-list>
             <a mat-list-item routerLink="/software">
                 <span class="mat-nav-list-a-style">
-                    <img src="../../assets/images/icons/home.png"> &nbsp;&nbsp; Main Menu
+                    <img src="../../assets/images/icons/home.png"> &nbsp;&nbsp; Dashboard
                 </span>
             </a>
             <mat-divider></mat-divider>
-            <label mat-subheader> &nbsp;&nbsp;&nbsp; Setup</label>
+            <label mat-subheader style="color: #dadada"> &nbsp;&nbsp;&nbsp; Setup</label>
             <a mat-list-item routerLink="/software/profile">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/profile.png"> &nbsp;&nbsp; Profile
                 </span>
             </a>
-            <a mat-list-item routerLink="">
+            <a mat-list-item routerLink="/software/cards">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/cards.png"> &nbsp;&nbsp; Cards
                 </span>
             </a>
             <mat-divider></mat-divider>
-            <label mat-subheader> &nbsp;&nbsp;&nbsp; Transaction</label>
-            <a mat-list-item routerLink="">
+            <label mat-subheader style="color: #dadada"> &nbsp;&nbsp;&nbsp; Transaction</label>
+            <a mat-list-item routerLink="/software/transfer">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/transfer.png"> &nbsp;&nbsp; Transfer
                 </span>
             </a>
-            <a mat-list-item routerLink="">
+            <a mat-list-item routerLink="/software/checkbalance">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/check-balance.png"> &nbsp;&nbsp; Check Balance
                 </span>
             </a>
             <mat-divider></mat-divider>
-            <label mat-subheader> &nbsp;&nbsp;&nbsp; Reports</label>
-            <a mat-list-item routerLink="">
+            <label mat-subheader style="color: #dadada"> &nbsp;&nbsp;&nbsp; Reports</label>
+            <a mat-list-item routerLink="/software/reports">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/reports.png"> &nbsp;&nbsp; Ledger
                 </span>
             </a>
             <mat-divider></mat-divider>
-            <label mat-subheader> &nbsp;&nbsp;&nbsp; Admin</label>
-            <a mat-list-item routerLink="">
+            <label mat-subheader style="color: #dadada"> &nbsp;&nbsp;&nbsp; Admin</label>
+            <a mat-list-item routerLink="/software/users">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/users.png"> &nbsp;&nbsp; Users
                 </span>
@@ -82,14 +82,17 @@
             <mat-divider></mat-divider>
         </mat-nav-list>
     </mat-drawer>
-    <mat-drawer-content>
+    <mat-drawer-content style="background-color: #ffffff;">
         <mat-toolbar class="mat-tool-bar-styles">
             <div class="container-fluid">
-                <button type="button" class="btn btn-info" (click)="drawer.toggle()">
+                <button type="button" class="btn btn-info" (click)="openDrawer()">
                     <i class="fa fa-bars"></i>
                 </button>
                 &nbsp;
-                <span>{{ ToolbarTitle }}</span>
+                <img id="toolBarImage" class="toolBar-img-style" />
+                <span class="toolbar-title-style">
+                    {{ ToolbarTitle }}
+                </span>
             </div>
         </mat-toolbar>
         <div class="container-fluid">
