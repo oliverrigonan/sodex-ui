@@ -1,0 +1,45 @@
+<div class="login-page">
+  <div class="container-fluid">
+    <br />
+    <br />
+    <br />
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <mat-card class="login-container">
+          <mat-card-header class="login-header">
+            <a routerLink="/home">
+              <img src="../../assets/images/logo/sodex.png" style="height: 30px;" />
+            </a>
+          </mat-card-header>
+          <mat-card-content class="login-content">
+            <h3>
+              Sign in
+            </h3>
+            <h6 style="margin-left: 1px;">to continue to application</h6>
+            <br />
+            <form (ngSubmit)="btnLoginClick()" class="form-container">
+              <mat-form-field class="input-100-percent">
+                <mat-label>Username</mat-label>
+                <input required matInput id="inpUsername" />
+              </mat-form-field>
+              <mat-form-field class="input-100-percent">
+                <mat-label>Password</mat-label>
+                <input required matInput id="inpPassword" placeholder="Enter your password" [type]="password">
+              </mat-form-field>
+            </form>
+            <br />
+            <button class="btn btn-primary btn-lg">Login</button>
+            <br />
+          </mat-card-content>
+        </mat-card>
+        <br />
+        <p class="text-center" style="color: gray; font-size: 12px;">
+          Copyright © 2018, SODE X.IO
+          <br /> VERSION 1.1
+        </p>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+</div>

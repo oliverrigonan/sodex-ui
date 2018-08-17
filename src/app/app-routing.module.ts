@@ -9,7 +9,7 @@ import { RouterModule, Routes } from '@angular/router';
 // Components
 // ==========
 import { HomeComponent } from './home/home.component';
-import { AccountComponent } from './account/account.component';
+import { LoginComponent } from './login/login.component';
 
 // ======
 // Routes
@@ -17,7 +17,7 @@ import { AccountComponent } from './account/account.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'account', component: AccountComponent }
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({

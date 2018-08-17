@@ -30,8 +30,7 @@
   .what-is-sodex-section {
     padding-top: 5rem;
     padding-bottom: 5rem;
-    color: #dadada;
-    background-color: black;
+    background-color: rgb(243, 243, 243);
     text-align: justify;
   }
 
@@ -45,6 +44,10 @@
   .footer-section {
     padding-top: 3rem;
     padding-bottom: 3rem;
-    background-color: #dddddd;
+    background-color: rgb(243, 243, 243);
     text-align: center;
+  }
+
+  .home-navbar-brand-style {
+    height: 35px;
   }

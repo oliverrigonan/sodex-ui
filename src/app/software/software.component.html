@@ -1,9 +1,7 @@
-<nav class="navbar fixed-top navbar-expand-lg navbar-light software-navbar-custom-size">
+<nav class="navbar fixed-top navbar-expand-sm navbar-dark software-navbar-custom-size">
     <div class="container-fluid">
-        <a class="navbar-brand" style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;color: rgb(53, 53, 53); font-size: 20px;"
-            routerLink="/home">
-            SODE
-            <span style="color: rgb(184, 0, 0)">X</span>
+        <a class="navbar-brand" routerLink="/home">
+            <img src="../../assets/images/logo/sodex.png" class="software-navbar-brand-style" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -40,45 +38,45 @@
 <mat-drawer-container class="side-nav-container">
     <mat-drawer class="side-nav-drawer" #drawer [mode]="'side'">
         <mat-nav-list>
-            <a mat-list-item routerLink="/software">
+            <a mat-list-item routerLink="/software" class="side-nav-link-style">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/home.png"> &nbsp;&nbsp; Dashboard
                 </span>
             </a>
             <mat-divider></mat-divider>
             <label mat-subheader> &nbsp;&nbsp;&nbsp; Setup</label>
-            <a mat-list-item routerLink="/software/profile">
+            <a mat-list-item routerLink="/software/profile" class="side-nav-link-style">
                 <span class="mat-nav-list-a-style">
-                    <img src="../../assets/images/icons/profile.png"> &nbsp;&nbsp; Profile
+                    <img src="../../assets/images/icons/store.png"> &nbsp;&nbsp; Profile
                 </span>
             </a>
-            <a mat-list-item routerLink="/software/cards">
+            <a mat-list-item routerLink="/software/cards" class="side-nav-link-style">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/cards.png"> &nbsp;&nbsp; Cards
                 </span>
             </a>
             <mat-divider></mat-divider>
             <label mat-subheader> &nbsp;&nbsp;&nbsp; Transaction</label>
-            <a mat-list-item routerLink="/software/transfer">
+            <a mat-list-item routerLink="/software/transfer" class="side-nav-link-style">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/transfer.png"> &nbsp;&nbsp; Transfer
                 </span>
             </a>
-            <a mat-list-item routerLink="/software/checkbalance">
+            <a mat-list-item routerLink="/software/checkbalance" class="side-nav-link-style">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/check-balance.png"> &nbsp;&nbsp; Check Balance
                 </span>
             </a>
             <mat-divider></mat-divider>
             <label mat-subheader> &nbsp;&nbsp;&nbsp; Reports</label>
-            <a mat-list-item routerLink="/software/reports">
+            <a mat-list-item routerLink="/software/reports" class="side-nav-link-style">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/reports.png"> &nbsp;&nbsp; Ledger
                 </span>
             </a>
             <mat-divider></mat-divider>
             <label mat-subheader> &nbsp;&nbsp;&nbsp; Admin</label>
-            <a mat-list-item routerLink="/software/users">
+            <a mat-list-item routerLink="/software/users" class="side-nav-link-style">
                 <span class="mat-nav-list-a-style">
                     <img src="../../assets/images/icons/users.png"> &nbsp;&nbsp; Users
                 </span>

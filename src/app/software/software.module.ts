@@ -36,6 +36,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCardModule } from '@angular/material/card';
 
 // =========
 // Bootstrap
@@ -59,7 +60,8 @@ import { ModalModule } from 'ngx-bootstrap';
     MatSelectModule,
     MatTabsModule,
     MatCheckboxModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatCardModule
   ],
   declarations: [
     DashboardComponent,

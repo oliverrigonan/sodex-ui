@@ -20,7 +20,7 @@ export class SoftwareComponent implements OnInit {
         toolBarImage.setAttribute("src", "../../assets/images/icons/home.png");
       } else if (router.url == "/software/profile") {
         this.ToolbarTitle = "Profile";
-        toolBarImage.setAttribute("src", "../../assets/images/icons/profile.png");
+        toolBarImage.setAttribute("src", "../../assets/images/icons/store.png");
       } else if (router.url == "/software/transfer") {
         this.ToolbarTitle = "Transfer";
         toolBarImage.setAttribute("src", "../../assets/images/icons/transfer.png");
