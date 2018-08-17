@@ -1,8 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     background-color: #ffffff;
+}
+
+.software-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px; 
+    line-height: 40px; 
+    background-color: #f5f5f5;
+    text-align: center;
+    font-size: 15px;
 }
 
 .home-navbar-custom-size {
@@ -66,7 +82,7 @@ body {
 
 .side-nav-container {
     margin-top: 45px;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 85px);
 }
 
 .side-nav-drawer {
@@ -81,7 +97,7 @@ body {
 }
 
 .img-icon-styles {
-    height: 100px;
+    height: 90px;
 }
 
 .mat-nav-list-a-style {

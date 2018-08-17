@@ -89,7 +89,10 @@
                     <input matInput placeholder="Contact Number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                   </mat-form-field>
                   <mat-form-field>
-                    <input matInput placeholder="Status" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                    <mat-select placeholder="Status">
+                      <mat-option [value]="'Enable'">Enable</mat-option>
+                      <mat-option [value]="'Disable'">Disable</mat-option>
+                    </mat-select>
                   </mat-form-field>
                 </div>
               </div>
