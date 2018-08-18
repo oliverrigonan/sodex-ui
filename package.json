@@ -29,7 +29,9 @@
     "hammerjs": "^2.0.8",
     "jquery": "^3.3.1",
     "ngx-bootstrap": "^3.0.1",
+    "ngx-toastr": "^9.0.2",
     "rxjs": "^6.0.0",
+    "wijmo": "^5.20182.500",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

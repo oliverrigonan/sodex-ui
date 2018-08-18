@@ -9,11 +9,10 @@ import { MatTabChangeEvent } from '@angular/material';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
+  constructor() { }
 
   public showUserListTab: Boolean = true;
   public showUserDetailTab: Boolean = false;
-
-  constructor() { }
 
   tabs = ['User List'];
   selected = new FormControl(0);

@@ -10,7 +10,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link nav-link-software" href="#">About</a>
                 </li>
                 <li class="nav-item">
@@ -18,16 +18,16 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-link-software" href="#">Support</a>
-                </li>
+                </li> -->
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link nav-link-software" href="#">Current User</a>
+                        <a class="nav-link nav-link-software" routerLink="/software">{{ currentUser }}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-software" href="#">
-                            <i class="fa fa-power-off"></i>
+                    <li class="nav-item" *ngIf="isUserLoggedIn">
+                        <a class="nav-link nav-link-software" routerLink="#" (click)="logoutUser()">
+                            <i class="fa fa-power-off "></i>
                         </a>
                     </li>
                 </ul>

@@ -21,15 +21,18 @@
             <form (ngSubmit)="btnLoginClick()" class="form-container">
               <mat-form-field class="input-100-percent">
                 <mat-label>Username</mat-label>
-                <input required matInput id="inpUsername" />
+                <input required matInput type="text" id="inpUsername" [(ngModel)]="loginModel.UserName" [ngModelOptions]="{standalone: true}"
+                />
               </mat-form-field>
               <mat-form-field class="input-100-percent">
                 <mat-label>Password</mat-label>
-                <input required matInput id="inpPassword" placeholder="Enter your password" [type]="password">
+                <input required matInput type="password" id="inpPassword" [(ngModel)]="loginModel.Password" [ngModelOptions]="{standalone: true}"
+                  placeholder="Enter your password" />
               </mat-form-field>
+
+              <input type="submit" class="btn btn-primary btn-lg" id="btnLogin" value="Sign in" />
             </form>
             <br />
-            <button class="btn btn-primary btn-lg">Login</button>
             <br />
           </mat-card-content>
         </mat-card>

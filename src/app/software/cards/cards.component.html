@@ -6,7 +6,7 @@
     <li class="breadcrumb-item active">Cards</li>
   </ol>
   <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)" (selectedTabChange)="onCardTabClick($event)">
-    <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
+    <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab.tabName">
       <br />
 
       <div *ngIf="showCardListTab">
@@ -65,7 +65,7 @@
               <div class="col">
                 <div class="form-container">
                   <mat-form-field>
-                    <input matInput placeholder="Card Number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                    <input matInput placeholder="Card Number" [(ngModel)]="listCards[currentCardIndex].Particulars" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                   </mat-form-field>
                   <mat-form-field>
                     <input matInput placeholder="Name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">

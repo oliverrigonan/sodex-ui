@@ -9,10 +9,9 @@ import { MatDrawer } from '@angular/material';
   styleUrls: ['./software.component.css']
 })
 export class SoftwareComponent implements OnInit {
-  public ToolbarTitle: String = "";
-  @ViewChild('drawer') drawer: MatDrawer;
-
-  constructor(private router: Router) {
+  constructor(
+    private router: Router
+  ) {
     router.events.subscribe((val) => {
       let toolBarImage: Element = document.getElementById("toolBarImage");
       if (router.url == "/software") {
@@ -38,17 +37,38 @@ export class SoftwareComponent implements OnInit {
         toolBarImage.setAttribute("src", "../../assets/images/icons/check-balance.png");
       } else {
         this.ToolbarTitle = "Sodex";
-        toolBarImage.setAttribute("src", "../../assets/images/icons/home.png");
       }
     });
   }
+
+  public ToolbarTitle: String = "";
+  @ViewChild('drawer') drawer: MatDrawer;
+
+  public currentUser = "Login";
+  public isUserLoggedIn = false;
 
   public openDrawer(): void {
     this.drawer.toggle();
   }
 
-  ngOnInit() {
-    this.openDrawer();
+  public logoutUser() {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('expires_in');
+    localStorage.removeItem('token_type');
+    localStorage.removeItem('username');
+
+    this.currentUser = "Login";;
+    this.isUserLoggedIn = false;
+
+    this.router.navigate(["/login"]);
   }
 
+  ngOnInit() {
+    this.openDrawer();
+    
+    if (localStorage.getItem("access_token") != null) {
+      this.currentUser = localStorage.getItem("username");
+      this.isUserLoggedIn = true;
+    }
+  }
 }

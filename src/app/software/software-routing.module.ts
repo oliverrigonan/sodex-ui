@@ -17,20 +17,26 @@ import { CardsComponent } from './cards/cards.component';
 import { CheckBalanceComponent } from './check-balance/check-balance.component';
 import { UsersComponent } from './users/users.component';
 
+// ==============
+// Custom Classes
+// ==============
+import { SoftwareRouterActivate } from './software.router.activate';
+
 // ======
 // Routes
 // ======
 const routes: Routes = [
   {
-    path: 'software', component: SoftwareComponent, children: [
-      { path: '', component: DashboardComponent },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'profile', component: ProfileComponent },
-      { path: 'transfer', component: TransferComponent },
-      { path: 'reports', component: ReportsComponent },
-      { path: 'cards', component: CardsComponent },
-      { path: 'checkbalance', component: CheckBalanceComponent },
-      { path: 'users', component: UsersComponent }
+    path: 'software', component: SoftwareComponent, canActivate: [SoftwareRouterActivate],
+    children: [
+      { path: '', component: DashboardComponent, canActivate: [SoftwareRouterActivate] },
+      { path: 'dashboard', component: DashboardComponent, canActivate: [SoftwareRouterActivate] },
+      { path: 'profile', component: ProfileComponent, canActivate: [SoftwareRouterActivate] },
+      { path: 'transfer', component: TransferComponent, canActivate: [SoftwareRouterActivate] },
+      { path: 'reports', component: ReportsComponent, canActivate: [SoftwareRouterActivate] },
+      { path: 'cards', component: CardsComponent, canActivate: [SoftwareRouterActivate] },
+      { path: 'checkbalance', component: CheckBalanceComponent, canActivate: [SoftwareRouterActivate] },
+      { path: 'users', component: UsersComponent, canActivate: [SoftwareRouterActivate] }
     ]
   },
 ];

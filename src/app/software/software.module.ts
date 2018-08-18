@@ -17,10 +17,16 @@ import { CardsComponent } from './cards/cards.component';
 import { CheckBalanceComponent } from './check-balance/check-balance.component';
 import { UsersComponent } from './users/users.component';
 
+// ========
+// Services
+// ========
+import { CardsService } from './cards/cards.service';
+
 // =======
 // Routing
 // =======
-import { SoftwareRoutingModule } from './/software-routing.module';
+import { SoftwareRoutingModule } from './software-routing.module';
+import { SoftwareRouterActivate } from './software.router.activate';
 
 // ===============
 // Material Design
@@ -72,6 +78,10 @@ import { ModalModule } from 'ngx-bootstrap';
     CardsComponent,
     CheckBalanceComponent,
     UsersComponent
+  ],
+  providers: [
+    SoftwareRouterActivate,
+    CardsService
   ]
 })
 export class SoftwareModule { }

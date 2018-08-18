@@ -8,9 +8,11 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
   styleUrls: ['./transfer.component.css']
 })
 export class TransferComponent implements OnInit {
+  constructor(
+    private modalService: BsModalService
+  ) { }
 
-  modalRef: BsModalRef;
-  constructor(private modalService: BsModalService) { }
+  public modalRef: BsModalRef;
 
   public openTransferModal(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template);
