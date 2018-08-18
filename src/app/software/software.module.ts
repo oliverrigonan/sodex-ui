@@ -43,11 +43,18 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 // =========
 // Bootstrap
 // =========
 import { ModalModule } from 'ngx-bootstrap';
+
+// =====
+// Wijmo
+// =====
+import { WjGridFilterModule } from 'wijmo/wijmo.angular2.grid.filter';
+import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
 
 @NgModule({
   imports: [
@@ -56,6 +63,8 @@ import { ModalModule } from 'ngx-bootstrap';
     ReactiveFormsModule,
     SoftwareRoutingModule,
     ModalModule.forRoot(),
+    WjGridFilterModule,
+    WjGridModule,
     MatNativeDateModule,
     MatToolbarModule,
     MatButtonModule,
@@ -67,7 +76,8 @@ import { ModalModule } from 'ngx-bootstrap';
     MatTabsModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressBarModule
   ],
   declarations: [
     DashboardComponent,

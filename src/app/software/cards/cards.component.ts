@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material';
 import { CardModel } from './card.model';
+import { ObservableArray, CollectionView } from 'wijmo/wijmo';
+import { CardsService } from './cards.service';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
   selector: 'app-cards',
@@ -9,12 +13,14 @@ import { CardModel } from './card.model';
   styleUrls: ['./cards.component.css']
 })
 export class CardsComponent implements OnInit {
-  constructor() { }
+  constructor(
+    private cardsService: CardsService,
+    private modalService: BsModalService
+  ) { }
 
   public showCardListTab: Boolean = true;
   public showCardDetailTab: Boolean = false;
 
-  public previousTabIndex = 0;
   public tabId: number = 1;
   public tabs = [{
     tabId: this.tabId,
@@ -22,6 +28,7 @@ export class CardsComponent implements OnInit {
   }];
   public selected = new FormControl(0);
 
+  public cardIndex: number = 0;
   public newCard: CardModel;
   public listCards: CardModel[] = [{
     Id: 0,
@@ -31,16 +38,18 @@ export class CardsComponent implements OnInit {
     Particulars: ""
   }];
 
-  public currentCardIndex = 0;
-  public currentCard: CardModel = {
-    Id: 0,
-    TabId: 0,
-    CardNumber: "",
-    Balance: 0,
-    Particulars: ""
-  };
+  public isFieldDisabled: Boolean = false;
 
-  public newCardTab(isAdd: Boolean): void {
+  public cardsSubscription: any;
+  public cardsData: ObservableArray = new ObservableArray();
+  public cardsCollectionView: CollectionView = new CollectionView(this.cardsData);
+  public cardsNumberOfPageIndex: number = 15;
+
+  public modalRef: BsModalRef;
+  
+  public isProgressBarHidden = false;
+
+  public btnDetailCard(isAdd: Boolean): void {
     this.tabId += 1;
 
     if (isAdd) {
@@ -60,43 +69,45 @@ export class CardsComponent implements OnInit {
     this.showCardListTab = false;
     this.showCardDetailTab = true;
 
-    this.newCard = {
-      Id: 0,
-      TabId: this.tabId,
-      CardNumber: "",
-      Balance: 0,
-      Particulars: ""
-    };
+    if(isAdd) {
+      this.newCard = {
+        Id: 0,
+        TabId: this.tabId,
+        CardNumber: "",
+        Balance: 0,
+        Particulars: ""
+      };
+    } else {
+      let currentSelectedCard = this.cardsCollectionView.currentItem;
+
+      this.newCard = {
+        Id: currentSelectedCard.Id,
+        TabId: this.tabId,
+        CardNumber: currentSelectedCard.CardNumber,
+        Balance: currentSelectedCard.Balance,
+        Particulars: currentSelectedCard.Particulars
+      };
+    }
 
     this.listCards.push(this.newCard);
-
-    this.currentCard = {
-      Id: 0,
-      TabId: 0,
-      CardNumber: "",
-      Balance: 0,
-      Particulars: ""
-    };
   }
 
   public removeCardTab(index: number): void {
     this.tabs.splice(index, 1);
 
-    if (this.previousTabIndex == index) {
+    if (this.tabs.length == index) {
       index--;
     }
 
-    if (this.previousTabIndex > 1) {
+    if (this.tabs.length > 1) {
       this.currentTab(index);
     }
-
-    this.previousTabIndex = index;
   }
 
   public currentTab(index: number): void {
     let tabId = this.tabs[index].tabId;
-    let currentCardIndex =  this.listCards.indexOf(this.listCards.filter(card => card.TabId === tabId)[0]);
-    this.currentCardIndex = currentCardIndex;
+    let currentCardIndex = this.listCards.indexOf(this.listCards.filter(card => card.TabId === tabId)[0]);
+    this.cardIndex = currentCardIndex;
   }
 
   public onCardTabClick(event: MatTabChangeEvent): void {
@@ -115,7 +126,34 @@ export class CardsComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
+  public getCardsData(): void {
+    this.cardsData = new ObservableArray();
+    this.cardsCollectionView = new CollectionView(this.cardsData);
+    this.cardsCollectionView.pageSize = 15;
+    this.cardsCollectionView.trackChanges = true;
 
+    this.isProgressBarHidden = false;
+
+    this.cardsService.listCards();
+    this.cardsSubscription = this.cardsService.cardsObservable.subscribe(
+      data => {
+        if (data != null) {
+          this.cardsData = data;
+          this.cardsCollectionView = new CollectionView(this.cardsData);
+          this.cardsCollectionView.pageSize = 15;
+          this.cardsCollectionView.trackChanges = true;
+        }
+
+        this.isProgressBarHidden = true;
+      }
+    );
+  }
+
+  public btnDeleteCardClick(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, { class: "modal-sm" });
+  }
+
+  ngOnInit() {
+    this.getCardsData();
   }
 }
