@@ -195,7 +195,7 @@ export class CardsComponent implements OnInit {
 
       let btnUpdateCard: Element = document.getElementById("btnUpdateCard");
       btnUpdateCard.setAttribute("disabled", "disabled");
-    }, 500);
+    }, 100);
   }
 
   public btnEditCard(): void {

@@ -24,7 +24,7 @@
             <wj-flex-grid-filter></wj-flex-grid-filter>
             <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [width]="95">
               <ng-template wjFlexGridCellTemplate [cellType]="'Cell'">
-                <button type="button" class="btn btn-success btn-block btn-xs" (click)="btnOpenCard()">
+                <button type="button" class="btn btn-primary btn-block btn-xs" (click)="btnOpenCard()">
                   <i class="fa fa-folder-open fa-fw"></i> Open
                 </button>
               </ng-template>
@@ -44,24 +44,26 @@
         </div>
         <div class="card-footer">
           <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
-            <button type="button" class="btn btn-secondary" (click)="cardsCollectionView.moveToFirstPage()">
+            <button type="button" class="btn" (click)="cardsCollectionView.moveToFirstPage()">
               <i class="fa fa-fast-backward"></i>
             </button>
-            <button type="button" class="btn btn-secondary" (click)="cardsCollectionView.moveToPreviousPage()">
+            <button type="button" class="btn" (click)="cardsCollectionView.moveToPreviousPage()">
               <i class="fa fa-step-backward"></i>
             </button>
-            <button type="button" class="btn btn-secondary" disabled style="width:100px">
+            <button type="button" class="btn" disabled style="width:100px">
               {{ cardsCollectionView.pageIndex + 1 }} / {{ cardsCollectionView.pageCount }}
             </button>
-            <button type="button" class="btn btn-secondary" (click)="cardsCollectionView.moveToNextPage()">
+            <button type="button" class="btn" (click)="cardsCollectionView.moveToNextPage()">
               <i class="fa fa-step-forward"></i>
             </button>
-            <button type="button" class="btn btn-secondary" (click)="cardsCollectionView.moveToLastPage()">
+            <button type="button" class="btn" (click)="cardsCollectionView.moveToLastPage()">
               <i class="fa fa-fast-forward"></i>
             </button>
           </div>
         </div>
       </div>
+
+      <br />
     </mat-tab>
 
     <mat-tab *ngFor="let detailTab of detailTabs; let index = index" [label]="detailTab">
@@ -124,13 +126,14 @@
         </div>
       </div>
 
+      <br />
     </mat-tab>
   </mat-tab-group>
 </div>
 
 <ng-template #newCardModalTemplate>
   <div class="modal-header">
-    <h4 class="modal-title">New Card</h4>
+    <h4 class="modal-title"><i class="fa fa-credit-card fa-fw"></i> New Card</h4>
   </div>
   <div class="modal-body">
     <div class="form-container">
@@ -139,8 +142,8 @@
           spellcheck="false">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Check Balance" [(ngModel)]="card.Balance" autocomplete="off" autocorrect="off" autocapitalize="off"
-          spellcheck="false" style="text-align: right;" value="0.00">
+        <input matInput type="number" placeholder="Check Balance" [(ngModel)]="card.Balance" autocomplete="off" autocorrect="off" autocapitalize="off"
+          spellcheck="false" style="text-align: right; font-size: 60px; height: 86.5px;" value="0.00">
       </mat-form-field>
       <mat-form-field>
         <mat-select placeholder="Status" [(ngModel)]="card.Status">
@@ -162,7 +165,7 @@
 
 <ng-template #deleteCardModalTemplate>
   <div class="modal-header">
-    <h4 class="modal-title">Delete</h4>
+    <h4 class="modal-title"><i class="fa fa-trash fa-fw"></i> Delete</h4>
   </div>
   <div class="modal-body">
     Are you sure you want to delete this card?

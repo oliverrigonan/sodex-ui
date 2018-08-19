@@ -47,12 +47,14 @@ import { ToastrModule } from 'ngx-toastr';
 // Custom Classes
 // ==============
 import { AppSettings } from './app.settings';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
