@@ -174,3 +174,7 @@ body {
     line-height: 1.5 !important;
     border-radius: 0.2rem !important;
 }
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+    z-index: 99999 !important;
+ }

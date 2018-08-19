@@ -3,5 +3,11 @@ export class CardModel {
     Id: number;
     CardNumber: string;
     Balance: number;
+    UserId: number;
+    FullName: string;
+    Email: string;
+    Address: string;
+    ContactNumber: string;
     Particulars: string;
+    Status: string;
 }
