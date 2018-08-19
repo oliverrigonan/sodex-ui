@@ -240,7 +240,7 @@ export class CardsComponent implements OnInit {
       this.updateCardSubscription = this.cardsService.updateCardObservable.subscribe(
         data => {
           if (data == 200) {
-            this.toastr.success('Save Successful!');
+            this.toastr.success('Update Successful!');
 
             this.isCardFieldDisabled = true;
 
@@ -251,7 +251,7 @@ export class CardsComponent implements OnInit {
 
             this.getCardsData();
           } else if (data == 404) {
-            this.toastr.error('Save Failed!');
+            this.toastr.error('Update Failed!');
 
             this.isCardFieldDisabled = false;
 
@@ -259,7 +259,7 @@ export class CardsComponent implements OnInit {
             btnUpdateCard.removeAttribute("disabled");
             btnCloseCard.removeAttribute("disabled");
           } else if (data == 400) {
-            this.toastr.error('Save Failed!');
+            this.toastr.error('Update Failed!');
 
             this.isCardFieldDisabled = false;
 
@@ -267,7 +267,7 @@ export class CardsComponent implements OnInit {
             btnUpdateCard.removeAttribute("disabled");
             btnCloseCard.removeAttribute("disabled");
           } else if (data == 500) {
-            this.toastr.error('Save Failed!');
+            this.toastr.error('Update Failed!');
 
             this.isCardFieldDisabled = false;
 
