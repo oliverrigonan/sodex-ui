@@ -18,21 +18,13 @@ export class CardsComponent implements OnInit {
     private modalService: BsModalService
   ) { }
 
-  public showCardListTab: Boolean = true;
-  public showCardDetailTab: Boolean = false;
-
-  public tabId: number = 1;
-  public tabs = [{
-    tabId: this.tabId,
-    tabName: "Card List"
-  }];
-  public selected = new FormControl(0);
+  public detailTabs = [];
+  public selectedTab = new FormControl(0);
 
   public cardIndex: number = 0;
-  public newCard: CardModel;
   public listCards: CardModel[] = [{
+    TabNumber: 0,
     Id: 0,
-    TabId: 1,
     CardNumber: "",
     Balance: 0,
     Particulars: ""
@@ -46,83 +38,67 @@ export class CardsComponent implements OnInit {
   public cardsNumberOfPageIndex: number = 15;
 
   public modalRef: BsModalRef;
-  
   public isProgressBarHidden = false;
 
   public btnDetailCard(isAdd: Boolean): void {
-    this.tabId += 1;
-
     if (isAdd) {
-      this.tabs.push({
-        tabId: this.tabId,
-        tabName: "New Card"
-      });
+      this.detailTabs.push("New Card");
     } else {
-      this.tabs.push({
-        tabId: this.tabId,
-        tabName: "Card Detail"
-      });
+      this.detailTabs.push("Card Detail");
     }
 
-    this.selected.setValue(this.tabs.length - 1);
+    this.selectedTab.setValue(this.detailTabs.length);
 
-    this.showCardListTab = false;
-    this.showCardDetailTab = true;
-
-    if(isAdd) {
-      this.newCard = {
+    if (isAdd) {
+      this.listCards.push({
+        TabNumber: this.selectedTab.value,
         Id: 0,
-        TabId: this.tabId,
         CardNumber: "",
         Balance: 0,
         Particulars: ""
-      };
+      });
     } else {
-      let currentSelectedCard = this.cardsCollectionView.currentItem;
+      let currentCard = this.cardsCollectionView.currentItem;
 
-      this.newCard = {
-        Id: currentSelectedCard.Id,
-        TabId: this.tabId,
-        CardNumber: currentSelectedCard.CardNumber,
-        Balance: currentSelectedCard.Balance,
-        Particulars: currentSelectedCard.Particulars
-      };
+      this.listCards.push({
+        TabNumber: this.selectedTab.value,
+        Id: currentCard.Id,
+        CardNumber: currentCard.CardNumber,
+        Balance: 0,
+        Particulars: ""
+      });
     }
 
-    this.listCards.push(this.newCard);
+    this.cardIndex = this.listCards.length - 1;
   }
 
   public removeCardTab(index: number): void {
-    this.tabs.splice(index, 1);
+    if ((this.detailTabs.length - 1) == index) {
+      let currentCardIndex = this.listCards.indexOf(this.listCards.filter(card => card.TabNumber === this.selectedTab.value)[0]);
+      this.listCards.splice(currentCardIndex, 1);
 
-    if (this.tabs.length == index) {
-      index--;
+      currentCardIndex--;
+      this.cardIndex = currentCardIndex;
+    } else {
+      let currentCardIndex = this.listCards.indexOf(this.listCards.filter(card => card.TabNumber === this.selectedTab.value)[0]);
+      this.listCards.splice(currentCardIndex, 1);
+
+      let tabNumber = this.selectedTab.value;
+      for (let i = currentCardIndex; i < this.listCards.length; i++) {
+        this.listCards[i].TabNumber = tabNumber;
+        tabNumber++;
+      }
+
+      this.cardIndex = this.listCards.indexOf(this.listCards[currentCardIndex]);
     }
 
-    if (this.tabs.length > 1) {
-      this.currentTab(index);
-    }
-  }
-
-  public currentTab(index: number): void {
-    let tabId = this.tabs[index].tabId;
-    let currentCardIndex = this.listCards.indexOf(this.listCards.filter(card => card.TabId === tabId)[0]);
-    this.cardIndex = currentCardIndex;
+    this.detailTabs.splice(index, 1);
   }
 
   public onCardTabClick(event: MatTabChangeEvent): void {
-    if (event.index == 0) {
-      setTimeout(() => {
-        this.showCardListTab = true;
-        this.showCardDetailTab = false;
-      }, 200);
-    } else {
-      setTimeout(() => {
-        this.showCardListTab = false;
-        this.showCardDetailTab = true;
-
-        this.currentTab(event.index);
-      }, 200);
+    if (event.index > 0) {
+      let currentCardIndex = this.listCards.indexOf(this.listCards.filter(card => card.TabNumber === this.selectedTab.value)[0]);
+      this.cardIndex = currentCardIndex;
     }
   }
 

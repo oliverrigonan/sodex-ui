@@ -1,6 +1,6 @@
 export class CardModel {
+    TabNumber: number;
     Id: number;
-    TabId: number;
     CardNumber: string;
     Balance: number;
     Particulars: string;
