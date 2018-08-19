@@ -332,7 +332,7 @@ export class CardsComponent implements OnInit {
     let currentCard = this.cardsCollectionView.currentItem;
     let listCards = this.listCards.filter(card => card.Id === currentCard.Id);
     if (listCards.length > 0) {
-      this.toastr.error('This item cannot be deleted because it is currently open in a tab. Please close it before proceeding.');
+      this.toastr.error('This card cannot be deleted because it is currently open in a tab. Please close it before proceeding.');
 
       btnConfirmDeleteCard.removeAttribute("disabled");
       btnConfirmDeleteCard.innerHTML = "<i class='fa fa-trash fa-fw'></i> Delete";

@@ -178,3 +178,14 @@ body {
 .cdk-global-overlay-wrapper, .cdk-overlay-container {
     z-index: 99999 !important;
  }
+
+ .modal-header {
+    background-color: #24292e;
+    color: #e6c300;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+ }
+
+ .modal-content {
+    border: none !important;
+ }
