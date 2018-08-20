@@ -189,3 +189,7 @@ body {
  .modal-content {
     border: none !important;
  }
+
+ .mat-ink-bar {
+    height: 5px !important;
+ }

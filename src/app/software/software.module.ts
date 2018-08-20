@@ -22,6 +22,7 @@ import { UsersComponent } from './users/users.component';
 // ========
 import { CardsService } from './cards/cards.service';
 import { ProfileService } from './profile/profile.service';
+import { TransferService } from './transfer/transfer.service';
 
 // =======
 // Routing
@@ -49,7 +50,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 // =========
 // Bootstrap
 // =========
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 // =====
 // Wijmo
@@ -64,6 +66,7 @@ import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
     ReactiveFormsModule,
     SoftwareRoutingModule,
     ModalModule.forRoot(),
+    TooltipModule.forRoot(),
     WjGridFilterModule,
     WjGridModule,
     MatNativeDateModule,
@@ -93,7 +96,8 @@ import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
   providers: [
     SoftwareRouterActivate,
     CardsService,
-    ProfileService
+    ProfileService,
+    TransferService
   ]
 })
 export class SoftwareModule { }

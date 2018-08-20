@@ -100,4 +100,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.getProfileData();
   }
+  
+  ngOnDestroy() {
+    if (this.getProfileSubscription != null) this.getProfileSubscription.unsubscribe();
+    if (this.updateProfileSubscription != null) this.updateProfileSubscription.unsubscribe();
+  }
 }

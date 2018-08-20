@@ -36,9 +36,10 @@
                 </button>
               </ng-template>
             </wj-flex-grid-column>
-            <wj-flex-grid-column [header]="'Card No.'" [binding]="'CardNumber'" [isReadOnly]="true" [width]="'2*'"></wj-flex-grid-column>
+            <wj-flex-grid-column [header]="'Card No.'" [binding]="'CardNumber'" [isReadOnly]="true" [width]="'1.5*'"></wj-flex-grid-column>
+            <wj-flex-grid-column [header]="'Name'" [binding]="'FullName'" [isReadOnly]="true" [width]="'2*'"></wj-flex-grid-column>
             <wj-flex-grid-column [header]="'Balance'" [binding]="'Balance'" [isReadOnly]="true" [width]="'2*'"></wj-flex-grid-column>
-            <wj-flex-grid-column [header]="'Particulars'" [binding]="'Particulars'" [isReadOnly]="true" [width]="'4*'"></wj-flex-grid-column>
+            <wj-flex-grid-column [header]="'Particulars'" [binding]="'Particulars'" [isReadOnly]="true" [width]="'3*'"></wj-flex-grid-column>
             <wj-flex-grid-column [header]="'Status'" [binding]="'Status'" [isReadOnly]="true" [width]="'1*'"></wj-flex-grid-column>
           </wj-flex-grid>
         </div>
@@ -98,7 +99,7 @@
                     autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
                 </mat-form-field>
                 <mat-form-field>
-                  <input matInput placeholder="Email Address" [disabled]="isCardFieldDisabled" [(ngModel)]="listCards[cardIndex].Email" autocomplete="off"
+                  <input matInput placeholder="Email" [disabled]="isCardFieldDisabled" [(ngModel)]="listCards[cardIndex].Email" autocomplete="off"
                     autocorrect="off" autocapitalize="off" spellcheck="false">
                 </mat-form-field>
                 <mat-form-field>
@@ -110,7 +111,7 @@
             <div class="col">
               <div class="form-container">
                 <mat-form-field>
-                  <input matInput placeholder="Check Balance" [disabled]="isCardFieldDisabled" [(ngModel)]="listCards[cardIndex].Balance" autocomplete="off"
+                  <input matInput placeholder="Balance" [disabled]="isCardFieldDisabled" [(ngModel)]="listCards[cardIndex].Balance" autocomplete="off"
                     autocorrect="off" autocapitalize="off" spellcheck="false" style="text-align: right; font-size: 60px; height: 86.5px;"
                     value="0.00" type="number">
                 </mat-form-field>

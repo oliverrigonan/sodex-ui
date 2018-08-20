@@ -8,7 +8,7 @@
 
   <div class="card card-default">
     <div class="card-header" align="right">
-      <button type="button" class="btn btn-primary" style="margin-right: 5px;" (click)="openTransferModal(trasnferModalTemplate)">
+      <button type="button" class="btn btn-primary" style="margin-right: 5px;" [disabled]="isBtnTransferDisable" (click)="openTransferModal(trasnferModalTemplate)">
         <i class="fa fa-credit-card fa-fw"></i>Transfer
       </button>
       <button type="button" class="btn btn-danger" routerLink="/software">
@@ -18,32 +18,50 @@
     <div class="card-body">
       <div class="row">
         <div class="col">
+          <div class="row">
+            <div class="col-md-10">
+              <mat-form-field style="width: 100%;">
+                <input matInput placeholder="Card Number" (keyup)="onCardNumberKeyPress($event)" [(ngModel)]="card.CardNumber" autocomplete="off" autocorrect="off"
+                  autocapitalize="off" spellcheck="false">
+              </mat-form-field>
+            </div>
+            <div class="col-md-2" align="right">
+              <button class="btn btn-info btn-block" style="margin-top: 8px;" type="button" tooltip="Load Card Details" placement="top"
+                (click)="btnLoadCardDetailsOnclick()">
+                <i class="fa fa-credit-card"></i>
+              </button>
+            </div>
+          </div>
           <div class="form-container">
             <mat-form-field>
-              <input matInput placeholder="Card Number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              <input matInput placeholder="Name" [disabled]="true" [(ngModel)]="card.FullName" autocomplete="off" autocorrect="off" autocapitalize="off"
+                spellcheck="false">
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              <textarea matInput placeholder="Address" [disabled]="true" [(ngModel)]="card.Address" rows="5" style="height: 87px; resize: none;"
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Email Address" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              <input matInput placeholder="Email" [disabled]="true" [(ngModel)]="card.Email" autocomplete="off" autocorrect="off" autocapitalize="off"
+                spellcheck="false">
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Balance" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              <input matInput placeholder="Contact Number" [disabled]="true" [(ngModel)]="card.ContactNumber" autocomplete="off" autocorrect="off"
+                autocapitalize="off" spellcheck="false">
             </mat-form-field>
           </div>
         </div>
         <div class="col">
           <div class="form-container">
             <mat-form-field>
-              <textarea matInput placeholder="Address" rows="5" style="height: 87px;" autocomplete="off" autocorrect="off" autocapitalize="off"
-                spellcheck="false"></textarea>
+              <input matInput placeholder="Balance" [disabled]="true" [(ngModel)]="card.Balance" autocomplete="off" autocorrect="off" autocapitalize="off"
+                spellcheck="false" style="text-align: right; font-size: 60px; height: 86.5px;" value="0.00" type="number">
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Contact Number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Status" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              <mat-select placeholder="Status" [disabled]="true" [(ngModel)]="card.Status">
+                <mat-option [value]="'Enable'">Enable</mat-option>
+                <mat-option [value]="'Disable'">Disable</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
         </div>
@@ -55,27 +73,24 @@
 <ng-template #trasnferModalTemplate>
   <div class="modal-header">
     <h4 class="modal-title">Transfer</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
   </div>
   <div class="modal-body">
     <div class="form-container">
       <mat-form-field>
-        <input matInput placeholder="Amount" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="0.00"
-          style="text-align: right; font-size: 60px;">
+        <input matInput placeholder="Amount" autocomplete="off" [(ngModel)]="amountToBeTransfered" autocorrect="off" autocapitalize="off"
+          spellcheck="false" value="0.00" style="text-align: right; font-size: 60px;">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Mother Card Current Balance" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-          value="0.00" style="text-align: right;" disabled />
+        <input matInput placeholder="Mother Card Current Balance" [(ngModel)]="motherCardBalance" autocomplete="off" autocorrect="off"
+          autocapitalize="off" spellcheck="false" value="0.00" style="text-align: right;" disabled />
       </mat-form-field>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" style="margin-right: 5px;">
-      <i class="fa fa-check fa-fw"></i>Okay
+    <button type="button" class="btn btn-primary" style="margin-right: 5px;" id="btnTransferAmount" (click)="btnTransferAmountOnclick()">
+      <i class="fa fa-credit-card fa-fw"></i>Transfer
     </button>
-    <button type="button" class="btn btn-danger" (click)="modalRef.hide()">
+    <button type="button" class="btn btn-danger" id="btnTransferAmountCloseModal" (click)="modalRef.hide()">
       <i class="fa fa-close fa-fw"></i>Close
     </button>
   </div>
