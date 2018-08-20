@@ -7,13 +7,13 @@
   </ol>
   <div class="card card-default">
     <div class="card-header" align="right">
-      <button type="button" class="btn btn-primary" style="margin-right: 5px;">
+      <button type="button" class="btn btn-primary" style="margin-right: 5px;" id="btnUpdateProfile" (click)="btnUpdateProfileOnclick()">
         <i class="fa fa-save fa-fw"></i>Save
       </button>
-      <button type="button" class="btn btn-primary" style="margin-right: 5px;">
+      <button type="button" class="btn btn-primary" style="margin-right: 5px;" id="btnEditProfile" (click)="btnEditProfileOnclick()">
         <i class="fa fa-edit fa-fw"></i>Edit
       </button>
-      <button type="button" class="btn btn-danger" routerLink="/software">
+      <button type="button" class="btn btn-danger" id="btnCloseProfile" routerLink="/software">
         <i class="fa fa-close fa-fw"></i>Close
       </button>
     </div>
@@ -22,28 +22,32 @@
         <div class="col">
           <div class="form-container">
             <mat-form-field>
-              <input matInput placeholder="Name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              <input matInput placeholder="Name" [(ngModel)]="profile.FullName" [disabled]="isProfileDisabled" autocomplete="off" autocorrect="off"
+                autocapitalize="off" spellcheck="false">
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Email Address" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              <textarea matInput placeholder="Address" [(ngModel)]="profile.Address" [disabled]="isProfileDisabled" rows="5" style="height: 87px; resize: none;"
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Mother Card Number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              <input matInput placeholder="Email" [(ngModel)]="profile.Email" [disabled]="isProfileDisabled" autocomplete="off" autocorrect="off"
+                autocapitalize="off" spellcheck="false">
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Check Balance" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                style="text-align: right;" value="0.00">
+              <input matInput placeholder="Contact Number" [(ngModel)]="profile.ContactNumber" [disabled]="isProfileDisabled" autocomplete="off"
+                autocorrect="off" autocapitalize="off" spellcheck="false">
             </mat-form-field>
           </div>
         </div>
         <div class="col">
           <div class="form-container">
             <mat-form-field>
-              <textarea matInput placeholder="Address" rows="5" style="height: 87px; resize: none;" autocomplete="off" autocorrect="off"
-                autocapitalize="off" spellcheck="false"></textarea>
+              <input matInput placeholder="Mother Card Number" [(ngModel)]="profile.MotherCardNumber" [disabled]="isProfileDisabled" autocomplete="off"
+                autocorrect="off" autocapitalize="off" spellcheck="false">
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Contact Number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              <input matInput placeholder="Check Balance" [(ngModel)]="profile.Balance" [disabled]="isProfileDisabled" autocomplete="off"
+                autocorrect="off" autocapitalize="off" spellcheck="false" style="text-align: right;" value="0.00">
             </mat-form-field>
           </div>
         </div>

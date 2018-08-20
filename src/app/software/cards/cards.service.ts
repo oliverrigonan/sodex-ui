@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
-import { Router } from '@angular/router';
 import { AppSettings } from './../../app.settings';
 import { Subject, Observable } from 'rxjs';
 import { ObservableArray } from 'wijmo/wijmo';
@@ -11,7 +10,6 @@ import { CardModel } from './card.model';
 })
 export class CardsService {
   constructor(
-    private router: Router,
     private http: Http,
     private appSettings: AppSettings
   ) { }
@@ -26,13 +24,13 @@ export class CardsService {
   public getCardsSource = new Subject<ObservableArray>();
   public getCardsObservable = this.getCardsSource.asObservable();
 
-  public saveCardSource = new Subject<number>();
+  public saveCardSource = new Subject<string[]>();
   public saveCardObservable = this.saveCardSource.asObservable();
 
-  public updateCardSource = new Subject<number>();
+  public updateCardSource = new Subject<string[]>();
   public updateCardObservable = this.updateCardSource.asObservable();
 
-  public deleteCardSource = new Subject<number>();
+  public deleteCardSource = new Subject<string[]>();
   public deleteCardObservable = this.deleteCardSource.asObservable();
 
   public getCards(): void {
@@ -47,12 +45,12 @@ export class CardsService {
             cardsObservableArray.push({
               Id: results[i].Id,
               CardNumber: results[i].CardNumber,
-              Balance: results[i].Balance,
-              UserId: results[i].UserId,
               FullName: results[i].FullName,
-              Email: results[i].Email,
               Address: results[i].Address,
+              Email: results[i].Email,
               ContactNumber: results[i].ContactNumber,
+              UserId: results[i].UserId,
+              Balance: results[i].Balance,
               Particulars: results[i].Particulars,
               Status: results[i].Status
             });
@@ -67,16 +65,12 @@ export class CardsService {
   public saveCard(objCard: CardModel): void {
     this.http.post(this.defaultAPIURLHost + "/api/cards/add", JSON.stringify(objCard), this.options).subscribe(
       response => {
-        this.saveCardSource.next(200);
+        let responseResults: string[] = ["success", ""];
+        this.saveCardSource.next(responseResults);
       },
       error => {
-        if (error.status == 404) {
-          this.saveCardSource.next(404);
-        } else if (error.status == 400) {
-          this.saveCardSource.next(400);
-        } else if (error.status == 500) {
-          this.saveCardSource.next(500);
-        }
+        let errorResults: string[] = ["failed", error.json()];
+        this.saveCardSource.next(errorResults);
       }
     )
   }
@@ -86,16 +80,12 @@ export class CardsService {
 
     this.http.put(this.defaultAPIURLHost + "/api/cards/update/" + id, JSON.stringify(objCard), this.options).subscribe(
       response => {
-        this.updateCardSource.next(200);
+        let responseResults: string[] = ["success", ""];
+        this.updateCardSource.next(responseResults);
       },
       error => {
-        if (error.status == 404) {
-          this.updateCardSource.next(404);
-        } else if (error.status == 400) {
-          this.updateCardSource.next(400);
-        } else if (error.status == 500) {
-          this.updateCardSource.next(500);
-        }
+        let errorResults: string[] = ["failed", error.json()];
+        this.updateCardSource.next(errorResults);
       }
     )
   }
@@ -103,16 +93,12 @@ export class CardsService {
   public deleteCard(id: number): void {
     this.http.delete(this.defaultAPIURLHost + "/api/cards/delete/" + id, this.options).subscribe(
       response => {
-        this.deleteCardSource.next(200);
+        let responseResults: string[] = ["success", ""];
+        this.deleteCardSource.next(responseResults);
       },
       error => {
-        if (error.status == 404) {
-          this.deleteCardSource.next(404);
-        } else if (error.status == 400) {
-          this.deleteCardSource.next(400);
-        } else if (error.status == 500) {
-          this.deleteCardSource.next(500);
-        }
+        let errorResults: string[] = ["failed", error.json()];
+        this.deleteCardSource.next(errorResults);
       }
     )
   }

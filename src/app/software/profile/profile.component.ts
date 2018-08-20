@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileModel } from './profile.model';
+import { ProfileService } from './profile.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -6,10 +9,95 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  constructor(
+    private profileService: ProfileService,
+    private toastr: ToastrService
+  ) { }
 
-  constructor() { }
+  public getProfileSubscription: any;
+  public updateProfileSubscription: any;
 
-  ngOnInit() {
+  public profile: ProfileModel = {
+    Id: 0,
+    FullName: "",
+    Address: "",
+    Email: "",
+    ContactNumber: "",
+    MotherCardNumber: "",
+    Balance: 0
+  };
+
+  public isProfileDisabled: Boolean = true;
+
+  public getProfileData(): void {
+    let btnUpdateProfile: Element = document.getElementById("btnUpdateProfile");
+    btnUpdateProfile.setAttribute("disabled", "disabled");
+
+    this.profileService.getProfile();
+    this.getProfileSubscription = this.profileService.getProfileObservable.subscribe(
+      data => {
+        this.profile.FullName = data.FullName;
+        this.profile.Address = data.Address;
+        this.profile.Email = data.Email;
+        this.profile.ContactNumber = data.ContactNumber;
+        this.profile.MotherCardNumber = data.MotherCardNumber;
+        this.profile.Balance = data.Balance;
+      }
+    );
   }
 
+  public btnUpdateProfileOnclick(): void {
+    let btnUpdateProfile: Element = document.getElementById("btnUpdateProfile");
+    btnUpdateProfile.innerHTML = "<i class='fa fa-check fa-fw'></i> Updating...";
+    btnUpdateProfile.setAttribute("disabled", "disabled");
+
+    let btnEditProfile: Element = document.getElementById("btnEditProfile");
+    btnEditProfile.setAttribute("disabled", "disabled");
+
+    let btnCloseProfile: Element = document.getElementById("btnCloseProfile");
+    btnCloseProfile.setAttribute("disabled", "disabled");
+    
+    this.profileService.updateProfile(this.profile);
+    this.updateProfileSubscription = this.profileService.updateProfileObservable.subscribe(
+      data => {
+        if (data[0] == "success") {
+          this.toastr.success('Update Successful!');
+
+          this.isProfileDisabled = true;
+
+          btnUpdateProfile.innerHTML = "<i class='fa fa-check fa-fw'></i> Update";
+          btnUpdateProfile.setAttribute("disabled", "disabled");
+          btnEditProfile.removeAttribute("disabled");
+          btnCloseProfile.removeAttribute("disabled");
+        } else if (data[0] == "failed") {
+          this.toastr.error(data[1]);
+
+          this.isProfileDisabled = false;
+
+          btnUpdateProfile.innerHTML = "<i class='fa fa-check fa-fw'></i> Update";
+          btnUpdateProfile.removeAttribute("disabled");
+          btnCloseProfile.removeAttribute("disabled");
+        }
+
+        if (this.updateProfileSubscription != null) this.updateProfileSubscription.unsubscribe();
+      }
+    );
+  }
+
+  public btnEditProfileOnclick(): void {
+    this.isProfileDisabled = false;
+
+    let btnEditProfile: Element = document.getElementById("btnEditProfile");
+    btnEditProfile.setAttribute("disabled", "disabled");
+
+    let btnUpdateProfile: Element = document.getElementById("btnUpdateProfile");
+    btnUpdateProfile.removeAttribute("disabled");
+
+    let btnCloseProfile: Element = document.getElementById("btnCloseProfile");
+    btnCloseProfile.removeAttribute("disabled");
+  }
+
+  ngOnInit() {
+    this.getProfileData();
+  }
 }

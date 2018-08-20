@@ -2,12 +2,12 @@ export class CardModel {
     TabNumber: number;
     Id: number;
     CardNumber: string;
-    Balance: number;
-    UserId: number;
     FullName: string;
-    Email: string;
     Address: string;
+    Email: string;
     ContactNumber: string;
+    UserId: number;
+    Balance: number;
     Particulars: string;
     Status: string;
 }

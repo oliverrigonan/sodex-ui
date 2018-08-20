@@ -28,12 +28,12 @@ export class CardsComponent implements OnInit {
     TabNumber: 0,
     Id: 0,
     CardNumber: "",
-    Balance: 0,
-    UserId: 0,
     FullName: "",
-    Email: "",
     Address: "",
+    Email: "",
     ContactNumber: "",
+    UserId: 0,
+    Balance: 0,
     Particulars: "",
     Status: ""
   };
@@ -43,12 +43,12 @@ export class CardsComponent implements OnInit {
     TabNumber: 0,
     Id: 0,
     CardNumber: "",
-    Balance: 0,
-    UserId: 0,
     FullName: "",
-    Email: "",
     Address: "",
+    Email: "",
     ContactNumber: "",
+    UserId: 0,
+    Balance: 0,
     Particulars: "",
     Status: ""
   }];
@@ -99,10 +99,14 @@ export class CardsComponent implements OnInit {
 
   public btnNewCardOnclick(template: TemplateRef<any>): void {
     this.card.CardNumber = "";
+    this.card.FullName = "";
+    this.card.Address = "";
+    this.card.Email = "";
+    this.card.ContactNumber = "";
     this.card.Balance = 0;
     this.card.Status = "Enable";
 
-    this.newCardModalRef = this.modalService.show(template, { class: "" });
+    this.newCardModalRef = this.modalService.show(template, { class: "modal-lg" });
   }
 
   public btnSaveCardOnclick(): void {
@@ -117,12 +121,12 @@ export class CardsComponent implements OnInit {
       TabNumber: this.card.TabNumber,
       Id: this.card.Id,
       CardNumber: this.card.CardNumber,
-      Balance: this.card.Balance,
-      UserId: this.card.UserId,
       FullName: this.card.FullName,
-      Email: this.card.Email,
       Address: this.card.Address,
+      Email: this.card.Email,
       ContactNumber: this.card.ContactNumber,
+      UserId: this.card.UserId,
+      Balance: this.card.Balance,
       Particulars: this.card.Particulars,
       Status: this.card.Status
     };
@@ -130,7 +134,7 @@ export class CardsComponent implements OnInit {
     this.cardsService.saveCard(objCard);
     this.saveCardSubscription = this.cardsService.saveCardObservable.subscribe(
       data => {
-        if (data == 200) {
+        if (data[0] == "success") {
           this.toastr.success('Save Successful!');
 
           setTimeout(() => {
@@ -142,21 +146,8 @@ export class CardsComponent implements OnInit {
           this.getCardsData();
 
           this.newCardModalRef.hide();
-        } else if (data == 404) {
-          this.toastr.error('Save Failed!');
-
-          btnSaveCard.innerHTML = "<i class='fa fa-save fa-fw'></i> Save";
-          btnSaveCard.removeAttribute("disabled");
-          btnCloseNewCardModal.removeAttribute("disabled");
-        } else if (data == 400) {
-          this.toastr.error('Save Failed!');
-
-          btnSaveCard.innerHTML = "<i class='fa fa-save fa-fw'></i> Save";
-          btnSaveCard.removeAttribute("disabled");
-          btnCloseNewCardModal.removeAttribute("disabled");
-
-        } else if (data == 500) {
-          this.toastr.error('Save Failed!');
+        } else if (data[0] == "failed") {
+          this.toastr.error(data[1]);
 
           btnSaveCard.innerHTML = "<i class='fa fa-save fa-fw'></i> Save";
           btnSaveCard.removeAttribute("disabled");
@@ -178,12 +169,12 @@ export class CardsComponent implements OnInit {
       TabNumber: this.selectedTab.value,
       Id: currentCard.Id,
       CardNumber: currentCard.CardNumber,
-      Balance: currentCard.Balance,
-      UserId: currentCard.UserId,
       FullName: currentCard.FullName,
-      Email: currentCard.Email,
       Address: currentCard.Address,
+      Email: currentCard.Email,
       ContactNumber: currentCard.ContactNumber,
+      UserId: currentCard.UserId,
+      Balance: currentCard.Balance,
       Particulars: currentCard.Particulars,
       Status: currentCard.Status
     });
@@ -216,12 +207,12 @@ export class CardsComponent implements OnInit {
         TabNumber: this.listCards[this.cardIndex].TabNumber,
         Id: this.listCards[this.cardIndex].Id,
         CardNumber: this.listCards[this.cardIndex].CardNumber,
-        Balance: this.listCards[this.cardIndex].Balance,
-        UserId: this.listCards[this.cardIndex].UserId,
         FullName: this.listCards[this.cardIndex].FullName,
-        Email: this.listCards[this.cardIndex].Email,
         Address: this.listCards[this.cardIndex].Address,
+        Email: this.listCards[this.cardIndex].Email,
         ContactNumber: this.listCards[this.cardIndex].ContactNumber,
+        UserId: this.listCards[this.cardIndex].UserId,
+        Balance: this.listCards[this.cardIndex].Balance,
         Particulars: this.listCards[this.cardIndex].Particulars,
         Status: this.listCards[this.cardIndex].Status
       };
@@ -239,7 +230,7 @@ export class CardsComponent implements OnInit {
       this.cardsService.updateCard(objCard);
       this.updateCardSubscription = this.cardsService.updateCardObservable.subscribe(
         data => {
-          if (data == 200) {
+          if (data[0] == "success") {
             this.toastr.success('Update Successful!');
 
             this.isCardFieldDisabled = true;
@@ -250,24 +241,8 @@ export class CardsComponent implements OnInit {
             btnCloseCard.removeAttribute("disabled");
 
             this.getCardsData();
-          } else if (data == 404) {
-            this.toastr.error('Update Failed!');
-
-            this.isCardFieldDisabled = false;
-
-            btnUpdateCard.innerHTML = "<i class='fa fa-check fa-fw'></i> Update";
-            btnUpdateCard.removeAttribute("disabled");
-            btnCloseCard.removeAttribute("disabled");
-          } else if (data == 400) {
-            this.toastr.error('Update Failed!');
-
-            this.isCardFieldDisabled = false;
-
-            btnUpdateCard.innerHTML = "<i class='fa fa-check fa-fw'></i> Update";
-            btnUpdateCard.removeAttribute("disabled");
-            btnCloseCard.removeAttribute("disabled");
-          } else if (data == 500) {
-            this.toastr.error('Update Failed!');
+          } else if (data[0] == "failed") {
+            this.toastr.error(data[1]);
 
             this.isCardFieldDisabled = false;
 
@@ -341,7 +316,7 @@ export class CardsComponent implements OnInit {
       this.cardsService.deleteCard(currentCard.Id);
       this.deleteCardSubscription = this.cardsService.deleteCardObservable.subscribe(
         data => {
-          if (data == 200) {
+          if (data[0] == "success") {
             this.toastr.success('Delete Successful!');
 
             setTimeout(() => {
@@ -353,20 +328,8 @@ export class CardsComponent implements OnInit {
             this.getCardsData();
 
             this.deleteCardModalRef.hide();
-          } else if (data == 404) {
-            this.toastr.error('Delete Failed!');
-
-            btnConfirmDeleteCard.innerHTML = "<i class='fa fa-trash fa-fw'></i> Delete";
-            btnConfirmDeleteCard.removeAttribute("disabled");
-            btnConfirmDeleteCardCloseModal.removeAttribute("disabled");
-          } else if (data == 400) {
-            this.toastr.error('Delete Failed!');
-
-            btnConfirmDeleteCard.innerHTML = "<i class='fa fa-trash fa-fw'></i> Delete";
-            btnConfirmDeleteCard.removeAttribute("disabled");
-            btnConfirmDeleteCardCloseModal.removeAttribute("disabled");
-          } else if (data == 500) {
-            this.toastr.error('Delete Failed!');
+          } else if (data[0] == "failed") {
+            this.toastr.error(data[1]);
 
             btnConfirmDeleteCard.innerHTML = "<i class='fa fa-trash fa-fw'></i> Delete";
             btnConfirmDeleteCard.removeAttribute("disabled");

@@ -94,12 +94,12 @@
                     autocorrect="off" autocapitalize="off" spellcheck="false">
                 </mat-form-field>
                 <mat-form-field>
-                  <input matInput placeholder="Email Address" [disabled]="isCardFieldDisabled" [(ngModel)]="listCards[cardIndex].Email" autocomplete="off"
-                    autocorrect="off" autocapitalize="off" spellcheck="false">
-                </mat-form-field>
-                <mat-form-field>
                   <textarea matInput placeholder="Address" [disabled]="isCardFieldDisabled" rows="5" style="height: 87px; resize: none;" [(ngModel)]="listCards[cardIndex].Address"
                     autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Email Address" [disabled]="isCardFieldDisabled" [(ngModel)]="listCards[cardIndex].Email" autocomplete="off"
+                    autocorrect="off" autocapitalize="off" spellcheck="false">
                 </mat-form-field>
                 <mat-form-field>
                   <input matInput placeholder="Contact Number" [disabled]="isCardFieldDisabled" autocomplete="off" autocorrect="off" [(ngModel)]="listCards[cardIndex].ContactNumber"
@@ -133,25 +133,51 @@
 
 <ng-template #newCardModalTemplate>
   <div class="modal-header">
-    <h4 class="modal-title"><i class="fa fa-credit-card fa-fw"></i> New Card</h4>
+    <h4 class="modal-title">
+      <i class="fa fa-credit-card fa-fw"></i> New Card</h4>
   </div>
   <div class="modal-body">
-    <div class="form-container">
-      <mat-form-field>
-        <input matInput placeholder="Card Number" [(ngModel)]="card.CardNumber" autocomplete="off" autocorrect="off" autocapitalize="off"
-          spellcheck="false">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="number" placeholder="Check Balance" [(ngModel)]="card.Balance" autocomplete="off" autocorrect="off" autocapitalize="off"
-          spellcheck="false" style="text-align: right; font-size: 60px; height: 86.5px;" value="0.00">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select placeholder="Status" [(ngModel)]="card.Status">
-          <mat-option [value]="'Enable'">Enable</mat-option>
-          <mat-option [value]="'Disable'">Disable</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div class="row">
+      <div class="col">
+        <div class="form-container">
+          <mat-form-field>
+            <input matInput placeholder="Card Number" [(ngModel)]="card.CardNumber" autocomplete="off" autocorrect="off" autocapitalize="off"
+              spellcheck="false">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Name" [(ngModel)]="card.FullName" autocomplete="off" autocorrect="off" autocapitalize="off"
+              spellcheck="false">
+          </mat-form-field>
+          <mat-form-field>
+            <textarea matInput placeholder="Address" rows="5" style="height: 87px; resize: none;" [(ngModel)]="card.Address" autocomplete="off"
+              autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Email Address" [(ngModel)]="card.Email" autocomplete="off" autocorrect="off" autocapitalize="off"
+              spellcheck="false">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Contact Number" [(ngModel)]="card.ContactNumber" autocomplete="off" autocorrect="off" autocapitalize="off"
+              spellcheck="false">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-container">
+          <mat-form-field>
+            <input matInput type="number" placeholder="Check Balance" [(ngModel)]="card.Balance" autocomplete="off" autocorrect="off"
+              autocapitalize="off" spellcheck="false" style="text-align: right; font-size: 60px; height: 86.5px;" value="0.00">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Status" [(ngModel)]="card.Status">
+              <mat-option [value]="'Enable'">Enable</mat-option>
+              <mat-option [value]="'Disable'">Disable</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
     </div>
+
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary" style="margin-right: 5px;" id="btnSaveCard" (click)="btnSaveCardOnclick()">
@@ -165,7 +191,8 @@
 
 <ng-template #deleteCardModalTemplate>
   <div class="modal-header">
-    <h4 class="modal-title"><i class="fa fa-trash fa-fw"></i> Delete</h4>
+    <h4 class="modal-title">
+      <i class="fa fa-trash fa-fw"></i> Delete</h4>
   </div>
   <div class="modal-body">
     Are you sure you want to delete this card?

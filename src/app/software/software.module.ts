@@ -21,6 +21,7 @@ import { UsersComponent } from './users/users.component';
 // Services
 // ========
 import { CardsService } from './cards/cards.service';
+import { ProfileService } from './profile/profile.service';
 
 // =======
 // Routing
@@ -91,7 +92,8 @@ import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
   ],
   providers: [
     SoftwareRouterActivate,
-    CardsService
+    CardsService,
+    ProfileService
   ]
 })
 export class SoftwareModule { }
