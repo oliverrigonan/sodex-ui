@@ -1,7 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material';
-import { CardModel } from './card.model';
 import { ObservableArray, CollectionView } from 'wijmo/wijmo';
 import { CardsService } from './cards.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -24,7 +23,7 @@ export class CardsComponent implements OnInit {
   public detailTabs = [];
   public selectedTab = new FormControl(0);
 
-  public card: CardModel = {
+  public card: any = {
     TabNumber: 0,
     Id: 0,
     CardNumber: "",
@@ -39,7 +38,7 @@ export class CardsComponent implements OnInit {
   };
 
   public cardIndex: number = 0;
-  public listCards: CardModel[] = [{
+  public listCards: any = [{
     TabNumber: 0,
     Id: 0,
     CardNumber: "",
@@ -106,7 +105,7 @@ export class CardsComponent implements OnInit {
     this.card.Balance = 0;
     this.card.Status = "Enable";
 
-    this.newCardModalRef = this.modalService.show(template, { class: "modal-lg" });
+    this.newCardModalRef = this.modalService.show(template, { class: "" });
   }
 
   public btnSaveCardOnclick(): void {
@@ -117,7 +116,7 @@ export class CardsComponent implements OnInit {
     let btnCloseNewCardModal: Element = document.getElementById("btnCloseNewCardModal");
     btnCloseNewCardModal.setAttribute("disabled", "disabled");
 
-    let objCard: CardModel = {
+    let objCard: any = {
       TabNumber: this.card.TabNumber,
       Id: this.card.Id,
       CardNumber: this.card.CardNumber,
@@ -203,7 +202,7 @@ export class CardsComponent implements OnInit {
     if (this.listCards.length > 0) {
       this.isCardFieldDisabled = true;
 
-      let objCard: CardModel = {
+      let objCard: any = {
         TabNumber: this.listCards[this.cardIndex].TabNumber,
         Id: this.listCards[this.cardIndex].Id,
         CardNumber: this.listCards[this.cardIndex].CardNumber,

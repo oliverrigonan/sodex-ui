@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { AppSettings } from './../../app.settings';
-import { ProfileModel } from './profile.model';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,21 +19,21 @@ export class ProfileService {
   public options = new RequestOptions({ headers: this.headers });
   private defaultAPIURLHost: string = this.appSettings.defaultAPIURLHost;
 
-  public getProfileSource = new Subject<ProfileModel>();
+  public getProfileSource = new Subject<any>();
   public getProfileObservable = this.getProfileSource.asObservable();
 
   public updateProfileSource = new Subject<string[]>();
   public updateProfileObservable = this.updateProfileSource.asObservable();
 
   public getProfile(): void {
-    let profile: ProfileModel = {
+    let profile: any = {
       Id: 0,
       FullName: "",
       Address: "",
       Email: "",
       ContactNumber: "",
       MotherCardNumber: "",
-      Balance: 0
+      MotherCardBalance: 0
     };
 
     this.getProfileSource.next(profile);
@@ -47,7 +46,7 @@ export class ProfileService {
           profile.Email = results.Email;
           profile.ContactNumber = results.ContactNumber;
           profile.MotherCardNumber = results.MotherCardNumber;
-          profile.Balance = results.Balance;
+          profile.MotherCardBalance = results.MotherCardBalance;
         }
 
         this.getProfileSource.next(profile);
@@ -55,7 +54,7 @@ export class ProfileService {
     );
   }
 
-  public updateProfile(objProfile: ProfileModel): void {
+  public updateProfile(objProfile: any): void {
     this.http.put(this.defaultAPIURLHost + "/api/profile/update", JSON.stringify(objProfile), this.options).subscribe(
       response => {
         let responseResults: string[] = ["success", ""];

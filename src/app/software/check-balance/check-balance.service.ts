@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TransferService {
+export class CheckBalanceService {
   constructor(
     private http: Http,
     private appSettings: AppSettings
@@ -19,28 +19,8 @@ export class TransferService {
   public options = new RequestOptions({ headers: this.headers });
   private defaultAPIURLHost: string = this.appSettings.defaultAPIURLHost;
 
-  public getMotherCardBalanceSource = new Subject<number>();
-  public getMotherCardBalancedObservable = this.getMotherCardBalanceSource.asObservable();
-
   public getCardSource = new Subject<any>();
   public getCardObservable = this.getCardSource.asObservable();
-
-  public transferAmountSource = new Subject<string[]>();
-  public transferAmountObservable = this.transferAmountSource.asObservable();
-
-  public getMotherCardBalance(): void {
-    this.getMotherCardBalanceSource.next(0);
-    this.http.get(this.defaultAPIURLHost + "/api/cards/motherCardBalance", this.options).subscribe(
-      response => {
-        var results = response.json();
-        if (results != null) {
-          this.getMotherCardBalanceSource.next(results);
-        } else {
-          this.getMotherCardBalanceSource.next(null);
-        }
-      }
-    );
-  }
 
   public getCardDetails(cardNumber: string): void {
     let cardDetail = {
@@ -77,18 +57,5 @@ export class TransferService {
         }
       }
     );
-  }
-
-  public transferAmount(objTransferData: any): void {
-    this.http.put(this.defaultAPIURLHost + "/api/cards/transfer", JSON.stringify(objTransferData), this.options).subscribe(
-      response => {
-        let responseResults: string[] = ["success", ""];
-        this.transferAmountSource.next(responseResults);
-      },
-      error => {
-        let errorResults: string[] = ["failed", error.json()];
-        this.transferAmountSource.next(errorResults);
-      }
-    )
   }
 }

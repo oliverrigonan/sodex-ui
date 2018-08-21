@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { AppSettings } from './../../app.settings';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ObservableArray } from 'wijmo/wijmo';
-import { CardModel } from './card.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +50,7 @@ export class CardsService {
               ContactNumber: results[i].ContactNumber,
               UserId: results[i].UserId,
               Balance: results[i].Balance,
+              BalanceDisplay: results[i].Balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","),
               Particulars: results[i].Particulars,
               Status: results[i].Status
             });
@@ -62,7 +62,7 @@ export class CardsService {
     );
   }
 
-  public saveCard(objCard: CardModel): void {
+  public saveCard(objCard: any): void {
     this.http.post(this.defaultAPIURLHost + "/api/cards/add", JSON.stringify(objCard), this.options).subscribe(
       response => {
         let responseResults: string[] = ["success", ""];
@@ -75,7 +75,7 @@ export class CardsService {
     )
   }
 
-  public updateCard(objCard: CardModel): void {
+  public updateCard(objCard: any): void {
     let id = objCard.Id;
 
     this.http.put(this.defaultAPIURLHost + "/api/cards/update/" + id, JSON.stringify(objCard), this.options).subscribe(

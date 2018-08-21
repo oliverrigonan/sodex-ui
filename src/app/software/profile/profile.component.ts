@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileModel } from './profile.model';
 import { ProfileService } from './profile.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -17,14 +16,14 @@ export class ProfileComponent implements OnInit {
   public getProfileSubscription: any;
   public updateProfileSubscription: any;
 
-  public profile: ProfileModel = {
+  public profile: any = {
     Id: 0,
     FullName: "",
     Address: "",
     Email: "",
     ContactNumber: "",
     MotherCardNumber: "",
-    Balance: 0
+    MotherCardBalance: 0
   };
 
   public isProfileDisabled: Boolean = true;
@@ -41,7 +40,7 @@ export class ProfileComponent implements OnInit {
         this.profile.Email = data.Email;
         this.profile.ContactNumber = data.ContactNumber;
         this.profile.MotherCardNumber = data.MotherCardNumber;
-        this.profile.Balance = data.Balance;
+        this.profile.MotherCardBalance = data.MotherCardBalance;
       }
     );
   }
@@ -56,7 +55,7 @@ export class ProfileComponent implements OnInit {
 
     let btnCloseProfile: Element = document.getElementById("btnCloseProfile");
     btnCloseProfile.setAttribute("disabled", "disabled");
-    
+
     this.profileService.updateProfile(this.profile);
     this.updateProfileSubscription = this.profileService.updateProfileObservable.subscribe(
       data => {
@@ -100,7 +99,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.getProfileData();
   }
-  
+
   ngOnDestroy() {
     if (this.getProfileSubscription != null) this.getProfileSubscription.unsubscribe();
     if (this.updateProfileSubscription != null) this.updateProfileSubscription.unsubscribe();

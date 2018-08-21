@@ -21,8 +21,8 @@
           <div class="row">
             <div class="col-md-10">
               <mat-form-field style="width: 100%;">
-                <input matInput placeholder="Card Number" (keyup)="onCardNumberKeyPress($event)" [(ngModel)]="card.CardNumber" autocomplete="off" autocorrect="off"
-                  autocapitalize="off" spellcheck="false">
+                <input matInput placeholder="Card Number" (keyup)="onCardNumberKeyPress($event)" [(ngModel)]="card.CardNumber" autocomplete="off"
+                  autocorrect="off" autocapitalize="off" spellcheck="false">
               </mat-form-field>
             </div>
             <div class="col-md-2" align="right">
@@ -54,8 +54,9 @@
         <div class="col">
           <div class="form-container">
             <mat-form-field>
-              <input matInput placeholder="Balance" [disabled]="true" [(ngModel)]="card.Balance" autocomplete="off" autocorrect="off" autocapitalize="off"
-                spellcheck="false" style="text-align: right; font-size: 60px; height: 86.5px;" value="0.00" type="number">
+              <input matInput currencyMask [options]="{ prefix: '', thousands: ',', decimal: '.' }" placeholder="Balance" [disabled]="true"
+                [(ngModel)]="card.Balance" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="text-align: right; font-size: 60px; height: 86.5px;"
+                value="0.00">
             </mat-form-field>
             <mat-form-field>
               <mat-select placeholder="Status" [disabled]="true" [(ngModel)]="card.Status">
@@ -77,12 +78,12 @@
   <div class="modal-body">
     <div class="form-container">
       <mat-form-field>
-        <input matInput placeholder="Amount" autocomplete="off" [(ngModel)]="amountToBeTransfered" autocorrect="off" autocapitalize="off"
-          spellcheck="false" value="0.00" style="text-align: right; font-size: 60px;">
+        <input matInput currencyMask placeholder="Amount" autocomplete="off" [(ngModel)]="amountToBeTransfered" autocorrect="off"
+          autocapitalize="off" spellcheck="false" value="0.00" style="font-size: 60px;">
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Mother Card Current Balance" [(ngModel)]="motherCardBalance" autocomplete="off" autocorrect="off"
-          autocapitalize="off" spellcheck="false" value="0.00" style="text-align: right;" disabled />
+        <input matInput currencyMask placeholder="Mother Card Current Balance" [(ngModel)]="motherCardBalance" autocomplete="off"
+          autocorrect="off" autocapitalize="off" spellcheck="false" value="0.00" disabled />
       </mat-form-field>
     </div>
   </div>

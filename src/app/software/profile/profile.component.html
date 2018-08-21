@@ -46,8 +46,8 @@
                 autocorrect="off" autocapitalize="off" spellcheck="false">
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Balance" [(ngModel)]="profile.Balance" [disabled]="isProfileDisabled" autocomplete="off"
-                autocorrect="off" autocapitalize="off" spellcheck="false" style="text-align: right;" value="0.00">
+              <input currencyMask matInput placeholder="Balance" [(ngModel)]="profile.MotherCardBalance" [disabled]="isProfileDisabled"
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="0.00">
             </mat-form-field>
           </div>
         </div>

@@ -1,7 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { TransferModel } from './transfer.model';
 import { TransferService } from './transfer.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -29,7 +28,7 @@ export class TransferComponent implements OnInit {
   public isCardDetailLoaded: Boolean = false;
   public isBtnTransferDisable: Boolean = true;
 
-  public card: TransferModel = {
+  public card: any = {
     Id: 0,
     CardNumber: "",
     FullName: "",
@@ -116,7 +115,12 @@ export class TransferComponent implements OnInit {
     let btnTransferAmountCloseModal: Element = document.getElementById("btnTransferAmountCloseModal");
     btnTransferAmountCloseModal.setAttribute("disabled", "disabled");
 
-    this.transferService.transferAmount(this.card.CardNumber, this.amountToBeTransfered);
+    let objTransferData: any = {
+      DestinationCardNumber: this.card.CardNumber,
+      Amount: this.amountToBeTransfered
+    }
+
+    this.transferService.transferAmount(objTransferData);
     this.transferAmountSubscription = this.transferService.transferAmountObservable.subscribe(
       data => {
         if (data[0] == "success") {

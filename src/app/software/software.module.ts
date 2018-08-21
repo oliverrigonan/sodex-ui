@@ -23,6 +23,7 @@ import { UsersComponent } from './users/users.component';
 import { CardsService } from './cards/cards.service';
 import { ProfileService } from './profile/profile.service';
 import { TransferService } from './transfer/transfer.service';
+import { CheckBalanceService } from './check-balance/check-balance.service';
 
 // =======
 // Routing
@@ -59,6 +60,22 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { WjGridFilterModule } from 'wijmo/wijmo.angular2.grid.filter';
 import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
 
+// ============
+// Curreny Mask
+// ============
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { CurrencyMaskConfig, CURRENCY_MASK_CONFIG } from "ng2-currency-mask/src/currency-mask.config";
+
+export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
+  align: "right",
+  allowNegative: false,
+  decimal: ".",
+  precision: 2,
+  prefix: "",
+  suffix: "",
+  thousands: ","
+};
+
 @NgModule({
   imports: [
     CommonModule,
@@ -67,6 +84,7 @@ import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
     SoftwareRoutingModule,
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
+    CurrencyMaskModule,
     WjGridFilterModule,
     WjGridModule,
     MatNativeDateModule,
@@ -97,7 +115,9 @@ import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
     SoftwareRouterActivate,
     CardsService,
     ProfileService,
-    TransferService
+    TransferService,
+    CheckBalanceService,
+    { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ]
 })
 export class SoftwareModule { }
