@@ -45,19 +45,19 @@
         </div>
         <div class="card-footer">
           <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
-            <button type="button" class="btn" (click)="cardsCollectionView.moveToFirstPage()">
+            <button type="button" class="btn btn-secondary" (click)="cardsCollectionView.moveToFirstPage()">
               <i class="fa fa-fast-backward"></i>
             </button>
-            <button type="button" class="btn" (click)="cardsCollectionView.moveToPreviousPage()">
+            <button type="button" class="btn btn-secondary" (click)="cardsCollectionView.moveToPreviousPage()">
               <i class="fa fa-step-backward"></i>
             </button>
-            <button type="button" class="btn" disabled style="width:100px">
+            <button type="button" class="btn btn-secondary" disabled style="width:100px">
               {{ cardsCollectionView.pageIndex + 1 }} / {{ cardsCollectionView.pageCount }}
             </button>
-            <button type="button" class="btn" (click)="cardsCollectionView.moveToNextPage()">
+            <button type="button" class="btn btn-secondary" (click)="cardsCollectionView.moveToNextPage()">
               <i class="fa fa-step-forward"></i>
             </button>
-            <button type="button" class="btn" (click)="cardsCollectionView.moveToLastPage()">
+            <button type="button" class="btn btn-secondary" (click)="cardsCollectionView.moveToLastPage()">
               <i class="fa fa-fast-forward"></i>
             </button>
           </div>
@@ -111,9 +111,8 @@
             <div class="col">
               <div class="form-container">
                 <mat-form-field>
-                  <input matInput currencyMask placeholder="Balance" disabled [(ngModel)]="listCards[cardIndex].Balance"
-                    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="font-size: 60px; height: 86.5px;"
-                    value="0.00">
+                  <input matInput currencyMask placeholder="Balance" disabled [(ngModel)]="listCards[cardIndex].Balance" autocomplete="off"
+                    autocorrect="off" autocapitalize="off" spellcheck="false" style="font-size: 60px; height: 86.5px;" value="0.00">
                 </mat-form-field>
                 <mat-form-field>
                   <mat-select placeholder="Status" [disabled]="isCardFieldDisabled" [(ngModel)]="listCards[cardIndex].Status">

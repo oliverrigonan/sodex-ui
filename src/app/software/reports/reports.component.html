@@ -8,7 +8,8 @@
 
   <div class="card card-default">
     <div class="card-header" align="right">
-      <button type="button" class="btn btn-info" style="margin-right: 5px;">
+      <button type="button" class="btn btn-info" style="margin-right: 5px;" id="btnGenerate" [disabled]="isBtnGenerateDisabled"
+        (click)="btnGenerateLedgerOnclick()">
         <i class="fa fa-refresh fa-fw"></i>Generate
       </button>
       <button type="button" class="btn btn-danger" routerLink="/software">
@@ -20,14 +21,15 @@
         <div class="col-md-6">
           <div class="form-container">
             <mat-form-field>
-              <input matInput placeholder="Card Number" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+              <input matInput placeholder="Card Number" (keyup)="onCardNumberKeyPress($event)" [(ngModel)]="cardNumber" autocomplete="off"
+                autocorrect="off" autocapitalize="off" spellcheck="false">
             </mat-form-field>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-container">
             <mat-form-field>
-              <input matInput [matDatepicker]="dateStartPicker" placeholder="Date Start">
+              <input matInput [matDatepicker]="dateStartPicker" [(ngModel)]="dateStartValue" [value]="dateStartValue" placeholder="Date Start">
               <mat-datepicker-toggle matSuffix [for]="dateStartPicker"></mat-datepicker-toggle>
               <mat-datepicker #dateStartPicker></mat-datepicker>
             </mat-form-field>
@@ -36,7 +38,7 @@
         <div class="col-md-3">
           <div class="form-container">
             <mat-form-field>
-              <input matInput [matDatepicker]="dateEndPicker" placeholder="Date End">
+              <input matInput [matDatepicker]="dateEndPicker" [(ngModel)]="dateEndValue" [value]="dateEndValue" placeholder="Date End">
               <mat-datepicker-toggle matSuffix [for]="dateEndPicker"></mat-datepicker-toggle>
               <mat-datepicker #dateEndPicker></mat-datepicker>
             </mat-form-field>
@@ -55,23 +57,31 @@
       </button>
     </div>
     <div class="card-body">
-
+      <mat-progress-bar [hidden]="isProgressBarHidden" [color]="'primary'" [mode]="'indeterminate'"></mat-progress-bar>
+      <wj-flex-grid #ledgersFlexGrid [itemsSource]="ledgersCollectionView" [selectionMode]="3" [frozenColumns]="2">
+        <wj-flex-grid-filter></wj-flex-grid-filter>
+        <wj-flex-grid-column [header]="'Date'" [binding]="'LedgerDateTime'" [isReadOnly]="true" [width]="'1*'"></wj-flex-grid-column>
+        <wj-flex-grid-column [header]="'Particulars'" [binding]="'Particulars'" [isReadOnly]="true" [width]="'3*'"></wj-flex-grid-column>
+        <wj-flex-grid-column [header]="'Debit'" [binding]="'DebitAmountDisplay'" [isReadOnly]="true" [width]="'2*'" [align]="'right'"></wj-flex-grid-column>
+        <wj-flex-grid-column [header]="'Credit'" [binding]="'CreditAmountDisplay'" [isReadOnly]="true" [width]="'2*'" [align]="'right'"></wj-flex-grid-column>
+        <wj-flex-grid-column [header]="'Balance'" [binding]="'BalanceAmountDisplay'" [isReadOnly]="true" [width]="'2*'" [align]="'right'"></wj-flex-grid-column>
+      </wj-flex-grid>
     </div>
     <div class="card-footer">
       <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
-        <button type="button" class="btn btn-secondary" (click)="ledgerCollectionView.moveToFirstPage()">
+        <button type="button" class="btn btn-secondary" (click)="ledgersCollectionView.moveToFirstPage()">
           <i class="fa fa-fast-backward"></i>
         </button>
-        <button type="button" class="btn btn-secondary" (click)="ledgerCollectionView.moveToPreviousPage()">
+        <button type="button" class="btn btn-secondary" (click)="ledgersCollectionView.moveToPreviousPage()">
           <i class="fa fa-step-backward"></i>
         </button>
         <button type="button" class="btn btn-secondary" disabled style="width:100px">
-          <!-- {{ ledgerCollectionView.pageIndex + 1 }} / {{ ledgerCollectionView.pageCount }} -->
+          {{ ledgersCollectionView.pageIndex + 1 }} / {{ ledgersCollectionView.pageCount }}
         </button>
-        <button type="button" class="btn btn-secondary" (click)="ledgerCollectionView.moveToNextPage()">
+        <button type="button" class="btn btn-secondary" (click)="ledgersCollectionView.moveToNextPage()">
           <i class="fa fa-step-forward"></i>
         </button>
-        <button type="button" class="btn btn-secondary" (click)="ledgerCollectionView.moveToLastPage()">
+        <button type="button" class="btn btn-secondary" (click)="ledgersCollectionView.moveToLastPage()">
           <i class="fa fa-fast-forward"></i>
         </button>
       </div>
@@ -82,22 +92,23 @@
 
   <div class="card card-default">
     <div class="card-body">
+      <br />
       <div class="row">
-        <div class="col">
+        <div class="col-md-7">
         </div>
-        <div class="col">
+        <div class="col-md-5">
           <div class="form-container">
             <mat-form-field>
-              <input matInput placeholder="Total Credit" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="0.00"
-                style="text-align: right;">
+              <input matInput currencyMask placeholder="Total Credit" [(ngModel)]="totalDebitAmount" disabled autocomplete="off" autocorrect="off"
+                autocapitalize="off" spellcheck="false" value="0.00" style="text-align: right;">
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Total Debit" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value="0.00"
-                style="text-align: right;">
+              <input matInput currencyMask placeholder="Total Debit" [(ngModel)]="totalCreditAmount" disabled autocomplete="off" autocorrect="off"
+                autocapitalize="off" spellcheck="false" value="0.00" style="text-align: right;">
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Total Balance" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                value="0.00" style="text-align: right;">
+              <input matInput currencyMask placeholder="Total Balance" [(ngModel)]="totalBalanceAmount" disabled autocomplete="off" autocorrect="off"
+                autocapitalize="off" spellcheck="false" value="0.00" style="text-align: right;">
             </mat-form-field>
           </div>
         </div>
