@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReportsService } from './reports.service';
 import { ToastrService } from 'ngx-toastr';
-import { FormControl } from '@angular/forms';
 import { ObservableArray, CollectionView } from 'wijmo/wijmo';
 import { WjFlexGrid } from 'wijmo/wijmo.angular2.grid';
+import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 
 @Component({
   selector: 'app-reports',
@@ -27,6 +27,7 @@ export class ReportsComponent implements OnInit {
   public ledgersNumberOfPageIndex: number = 15;
 
   public isProgressBarHidden = true;
+
   @ViewChild('ledgersFlexGrid') ledgersFlexGrid: WjFlexGrid;
 
   public totalDebitAmount: number = 0;
@@ -34,6 +35,45 @@ export class ReportsComponent implements OnInit {
   public totalBalanceAmount: number = 0;
 
   public isBtnGenerateDisabled: Boolean = true;
+
+  public cboShowNumberOfRows: ObservableArray = new ObservableArray();
+
+  public createCboShowNumberOfRows(): void {
+    for (var i = 0; i <= 4; i++) {
+      var rows = 0;
+      var rowsString = "";
+
+      if (i == 0) {
+        rows = 15;
+        rowsString = "15 Rows";
+      } else if (i == 1) {
+        rows = 50;
+        rowsString = "50 Rows";
+      } else if (i == 2) {
+        rows = 100;
+        rowsString = "100 Rows";
+      } else if (i == 3) {
+        rows = 150;
+        rowsString = "150 Rows";
+      } else {
+        rows = 200;
+        rowsString = "200 Rows";
+      }
+
+      this.cboShowNumberOfRows.push({
+        rowNumber: rows,
+        rowString: rowsString
+      });
+    }
+  }
+
+  public cboShowNumberOfRowsOnSelectedIndexChanged(selectedValue: any): void {
+    this.ledgersNumberOfPageIndex = selectedValue;
+
+    this.ledgersCollectionView.pageSize = this.ledgersNumberOfPageIndex;
+    this.ledgersCollectionView.refresh();
+    this.ledgersFlexGrid.refresh();
+  }
 
   public getCardsData(): void {
     this.isBtnGenerateDisabled = true;
@@ -51,15 +91,23 @@ export class ReportsComponent implements OnInit {
         if (data.length > 0) {
           this.ledgersData = data;
           this.ledgersCollectionView = new CollectionView(this.ledgersData);
-          this.ledgersCollectionView.pageSize = 15;
+          this.ledgersCollectionView.pageSize = this.ledgersNumberOfPageIndex;
           this.ledgersCollectionView.trackChanges = true;
           this.ledgersCollectionView.refresh();
           this.ledgersFlexGrid.refresh();
 
-          for (let i = 0; i < this.ledgersCollectionView.items.length; i++) {
-            this.totalDebitAmount += this.ledgersCollectionView.items[i].DebitAmount;
-            this.totalCreditAmount += this.ledgersCollectionView.items[i].CreditAmount;
-            this.totalBalanceAmount += this.ledgersCollectionView.items[i].BalanceAmount;
+          for (let p = 1; p <= this.ledgersCollectionView.pageCount; p++) {
+            for (let i = 0; i < this.ledgersCollectionView.items.length; i++) {
+              this.totalDebitAmount += this.ledgersCollectionView.items[i].DebitAmount;
+              this.totalCreditAmount += this.ledgersCollectionView.items[i].CreditAmount;
+              this.totalBalanceAmount += this.ledgersCollectionView.items[i].BalanceAmount;
+            }
+
+            if (p == this.ledgersCollectionView.pageCount) {
+              this.ledgersCollectionView.moveToFirstPage();
+            } else {
+              this.ledgersCollectionView.moveToNextPage();
+            }
           }
 
           this.toastr.success("Generate Successful!");
@@ -108,7 +156,47 @@ export class ReportsComponent implements OnInit {
     }
   }
 
+  public btnExportLedgerOnclick(): void {
+    let data: any[] = [{
+      Date: "Date",
+      Particulars: "Particulars",
+      DebitAmount: "Debit",
+      CreditAmount: "Credit",
+      BalanceAmount: "Balance"
+    }];
+
+    if (this.ledgersCollectionView.items.length > 0) {
+      for (let p = 1; p <= this.ledgersCollectionView.pageCount; p++) {
+        for (let i = 0; i < this.ledgersCollectionView.items.length; i++) {
+          data.push({
+            Date: this.ledgersCollectionView.items[i].LedgerDateTime,
+            Particulars: this.ledgersCollectionView.items[i].Particulars,
+            DebitAmount: this.ledgersCollectionView.items[i].DebitAmount,
+            CreditAmount: this.ledgersCollectionView.items[i].CreditAmount,
+            BalanceAmount: this.ledgersCollectionView.items[i].BalanceAmount,
+          });
+        }
+
+        if (p == this.ledgersCollectionView.pageCount) {
+          this.ledgersCollectionView.moveToFirstPage();
+        } else {
+          this.ledgersCollectionView.moveToNextPage();
+        }
+      }
+    }
+
+    let cardNumber = this.cardNumber;
+    let startDate = ('0' + (this.dateStartValue.getMonth() + 1)).slice(-2) + '-' + ('0' + this.dateStartValue.getDate()).slice(-2) + '-' + this.dateStartValue.getFullYear();
+    let endDate = ('0' + (this.dateEndValue.getMonth() + 1)).slice(-2) + '-' + ('0' + this.dateEndValue.getDate()).slice(-2) + '-' + this.dateEndValue.getFullYear();
+
+    new Angular5Csv(data, cardNumber + '_From(' + startDate + ")_To(" + endDate + ")");
+  }
+
   ngOnInit() {
+    this.createCboShowNumberOfRows();
+  }
+
+  ngOnDestroy() {
     if (this.getLedgersSubscription != null) this.getLedgersSubscription.unsubscribe();
   }
 }

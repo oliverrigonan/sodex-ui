@@ -5,18 +5,38 @@
     </li>
     <li class="breadcrumb-item active">Cards</li>
   </ol>
-  <mat-tab-group [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)" (selectedTabChange)="onCardTabClick($event)">
+  <mat-tab-group [@.disabled]="true" [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)"
+    (selectedTabChange)="onCardTabClick($event)">
     <mat-tab [label]="'Card List'">
       <br />
 
       <div class="card card-default">
         <div class="card-header" align="right">
-          <button type="button" class="btn btn-primary" style="margin-right: 5px;" (click)="btnNewCardOnclick(newCardModalTemplate)">
-            <i class="fa fa-plus fa-fw"></i>Add
-          </button>
-          <button type="button" class="btn btn-danger" routerLink="/software">
-            <i class="fa fa-close fa-fw"></i>Close
-          </button>
+          <table border="0" style="width: 100%; border: none;">
+            <tr>
+              <td style="width: 80%;">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <b>Show</b>
+                    </div>
+                  </div>
+                  <wj-combo-box #cboNumberOfRows [itemsSource]="cboShowNumberOfRows" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'rowString'"
+                    [selectedValuePath]="'rowNumber'" (selectedIndexChanged)="cboShowNumberOfRowsOnSelectedIndexChanged(cboNumberOfRows.selectedValue)"
+                    style="width: 180px;">
+                  </wj-combo-box>
+                </div>
+              </td>
+              <td style="width: 20%;" align="right">
+                <button type="button" class="btn btn-primary" style="margin-right: 5px;" (click)="btnNewCardOnclick(newCardModalTemplate)">
+                  <i class="fa fa-plus fa-fw"></i>Add
+                </button>
+                <button type="button" class="btn btn-danger" routerLink="/software">
+                  <i class="fa fa-close fa-fw"></i>Close
+                </button>
+              </td>
+            </tr>
+          </table>
         </div>
         <div class="card-body">
           <mat-progress-bar [hidden]="isProgressBarHidden" [color]="'primary'" [mode]="'indeterminate'"></mat-progress-bar>
@@ -25,7 +45,7 @@
             <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [width]="95">
               <ng-template wjFlexGridCellTemplate [cellType]="'Cell'">
                 <button type="button" class="btn btn-primary btn-block btn-xs" (click)="btnOpenCard()">
-                  <i class="fa fa-folder-open fa-fw"></i> Open
+                  <i class="fa fa-edit fa-fw"></i> Edit
                 </button>
               </ng-template>
             </wj-flex-grid-column>

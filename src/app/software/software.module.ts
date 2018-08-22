@@ -59,6 +59,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 // =====
 import { WjGridFilterModule } from 'wijmo/wijmo.angular2.grid.filter';
 import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
+import { WjInputModule } from 'wijmo/wijmo.angular2.input';
 
 // ============
 // Curreny Mask
@@ -87,6 +88,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     CurrencyMaskModule,
     WjGridFilterModule,
     WjGridModule,
+    WjInputModule,
     MatNativeDateModule,
     MatToolbarModule,
     MatButtonModule,

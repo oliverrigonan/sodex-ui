@@ -67,7 +67,46 @@ export class CardsComponent implements OnInit {
   public newCardModalRef: BsModalRef;
   public isProgressBarHidden = false;
 
+  public cboShowNumberOfRows: ObservableArray = new ObservableArray();
+
   @ViewChild('cardsFlexGrid') cardsFlexGrid: WjFlexGrid;
+
+  public createCboShowNumberOfRows(): void {
+    for (var i = 0; i <= 4; i++) {
+      var rows = 0;
+      var rowsString = "";
+
+      if (i == 0) {
+        rows = 15;
+        rowsString = "15 Rows";
+      } else if (i == 1) {
+        rows = 50;
+        rowsString = "50 Rows";
+      } else if (i == 2) {
+        rows = 100;
+        rowsString = "100 Rows";
+      } else if (i == 3) {
+        rows = 150;
+        rowsString = "150 Rows";
+      } else {
+        rows = 200;
+        rowsString = "200 Rows";
+      }
+
+      this.cboShowNumberOfRows.push({
+        rowNumber: rows,
+        rowString: rowsString
+      });
+    }
+  }
+
+  public cboShowNumberOfRowsOnSelectedIndexChanged(selectedValue: any): void {
+    this.cardsNumberOfPageIndex = selectedValue;
+
+    this.cardsCollectionView.pageSize = this.cardsNumberOfPageIndex;
+    this.cardsCollectionView.refresh();
+    this.cardsFlexGrid.refresh();
+  }
 
   public getCardsData(): void {
     this.cardsData = new ObservableArray();
@@ -85,7 +124,7 @@ export class CardsComponent implements OnInit {
         if (data.length > 0) {
           this.cardsData = data;
           this.cardsCollectionView = new CollectionView(this.cardsData);
-          this.cardsCollectionView.pageSize = 15;
+          this.cardsCollectionView.pageSize = this.cardsNumberOfPageIndex;
           this.cardsCollectionView.trackChanges = true;
           this.cardsCollectionView.refresh();
           this.cardsFlexGrid.refresh();
@@ -342,6 +381,7 @@ export class CardsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.createCboShowNumberOfRows();
     this.getCardsData();
   }
 

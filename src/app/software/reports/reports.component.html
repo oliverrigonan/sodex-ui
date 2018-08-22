@@ -29,18 +29,19 @@
         <div class="col-md-3">
           <div class="form-container">
             <mat-form-field>
-              <input matInput [matDatepicker]="dateStartPicker" [(ngModel)]="dateStartValue" [value]="dateStartValue" placeholder="Date Start">
+              <input matInput [disabled]="true" [matDatepicker]="dateStartPicker" [(ngModel)]="dateStartValue" [value]="dateStartValue"
+                placeholder="Date Start">
               <mat-datepicker-toggle matSuffix [for]="dateStartPicker"></mat-datepicker-toggle>
-              <mat-datepicker #dateStartPicker></mat-datepicker>
+              <mat-datepicker #dateStartPicker disabled="false"></mat-datepicker>
             </mat-form-field>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-container">
             <mat-form-field>
-              <input matInput [matDatepicker]="dateEndPicker" [(ngModel)]="dateEndValue" [value]="dateEndValue" placeholder="Date End">
+              <input matInput [disabled]="true" [matDatepicker]="dateEndPicker" [(ngModel)]="dateEndValue" [value]="dateEndValue" placeholder="Date End">
               <mat-datepicker-toggle matSuffix [for]="dateEndPicker"></mat-datepicker-toggle>
-              <mat-datepicker #dateEndPicker></mat-datepicker>
+              <mat-datepicker #dateEndPicker disabled="false"></mat-datepicker>
             </mat-form-field>
           </div>
         </div>
@@ -52,9 +53,29 @@
 
   <div class="card card-default">
     <div class="card-header" align="right">
-      <button type="button" class="btn btn-success" style="margin-right: 5px;">
-        <i class="fa fa-table fa-fw"></i>Export
-      </button>
+      <table border="0" style="width: 100%; border: none;">
+        <tr>
+          <td style="width: 80%;">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <b>Show</b>
+                </div>
+              </div>
+              <wj-combo-box #cboNumberOfRows [itemsSource]="cboShowNumberOfRows" [isEditable]="false" [isRequired]="true" [displayMemberPath]="'rowString'"
+                [selectedValuePath]="'rowNumber'" (selectedIndexChanged)="cboShowNumberOfRowsOnSelectedIndexChanged(cboNumberOfRows.selectedValue)"
+                style="width: 180px;">
+              </wj-combo-box>
+            </div>
+          </td>
+          <td style="width: 20%;" align="right">
+            <button type="button" class="btn btn-success" style="margin-right: 5px;" [disabled]="isBtnGenerateDisabled" id="btnExport"
+              (click)="btnExportLedgerOnclick()">
+              <i class="fa fa-table fa-fw"></i>Export
+            </button>
+          </td>
+        </tr>
+      </table>
     </div>
     <div class="card-body">
       <mat-progress-bar [hidden]="isProgressBarHidden" [color]="'primary'" [mode]="'indeterminate'"></mat-progress-bar>
@@ -99,11 +120,11 @@
         <div class="col-md-5">
           <div class="form-container">
             <mat-form-field>
-              <input matInput currencyMask placeholder="Total Credit" [(ngModel)]="totalDebitAmount" disabled autocomplete="off" autocorrect="off"
+              <input matInput currencyMask placeholder="Total Debit" [(ngModel)]="totalDebitAmount" disabled autocomplete="off" autocorrect="off"
                 autocapitalize="off" spellcheck="false" value="0.00" style="text-align: right;">
             </mat-form-field>
             <mat-form-field>
-              <input matInput currencyMask placeholder="Total Debit" [(ngModel)]="totalCreditAmount" disabled autocomplete="off" autocorrect="off"
+              <input matInput currencyMask placeholder="Total Credit" [(ngModel)]="totalCreditAmount" disabled autocomplete="off" autocorrect="off"
                 autocapitalize="off" spellcheck="false" value="0.00" style="text-align: right;">
             </mat-form-field>
             <mat-form-field>
