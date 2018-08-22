@@ -24,6 +24,7 @@ import { CardsService } from './cards/cards.service';
 import { ProfileService } from './profile/profile.service';
 import { TransferService } from './transfer/transfer.service';
 import { CheckBalanceService } from './check-balance/check-balance.service';
+import { UsersService } from './users/users.service';
 
 // =======
 // Routing
@@ -119,6 +120,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     ProfileService,
     TransferService,
     CheckBalanceService,
+    UsersService,
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ]
 })

@@ -24,7 +24,6 @@ export class CardsComponent implements OnInit {
   public selectedTab = new FormControl(0);
 
   public card: any = {
-    TabNumber: 0,
     Id: 0,
     CardNumber: "",
     FullName: "",
@@ -156,7 +155,6 @@ export class CardsComponent implements OnInit {
     btnCloseNewCardModal.setAttribute("disabled", "disabled");
 
     let objCard: any = {
-      TabNumber: this.card.TabNumber,
       Id: this.card.Id,
       CardNumber: this.card.CardNumber,
       FullName: this.card.FullName,
