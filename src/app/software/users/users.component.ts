@@ -61,11 +61,41 @@ export class UsersComponent implements OnInit {
   public usersNumberOfPageIndex: number = 15;
 
   @ViewChild('userFlexGrid') userFlexGrid: WjFlexGrid;
+  @ViewChild('userFormFlexGrid') userFormFlexGrid: WjFlexGrid;
 
   public isProgressBarHidden = false;
   public newUserModalRef: BsModalRef;
 
   public cboShowNumberOfRows: ObservableArray = new ObservableArray();
+  public cboUserFormShowNumberOfRows: ObservableArray = new ObservableArray();
+
+  public getUserFormSubscription: any;
+
+  public userFormData: ObservableArray = new ObservableArray();
+  public userFormCollectionView: CollectionView = new CollectionView(this.usersData);
+  public userFormNumberOfPageIndex: number = 15;
+
+  public isUserFormProgressBarHidden = false;
+  public newUserFormModalRef: BsModalRef;
+  public deleteUserFormModalRef: BsModalRef;
+
+  public formData: ObservableArray = new ObservableArray();
+  public getFormsSubscription: any;
+  public saveUserFormSubscription: any;
+  public updateUserFormSubscription: any;
+  public deleteUserFormSubscription: any;
+
+  public userForm: any = {
+    Id: 0,
+    UserId: 0,
+    FormId: 0,
+    CanAdd: false,
+    CanEdit: false,
+    CanUpdate: false,
+    CanDelete: false,
+  }
+
+  public isBtnUserFormButtonsDisabled: Boolean = true;
 
   public createCboShowNumberOfRows(): void {
     for (var i = 0; i <= 4; i++) {
@@ -90,6 +120,11 @@ export class UsersComponent implements OnInit {
       }
 
       this.cboShowNumberOfRows.push({
+        rowNumber: rows,
+        rowString: rowsString
+      });
+
+      this.cboUserFormShowNumberOfRows.push({
         rowNumber: rows,
         rowString: rowsString
       });
@@ -157,6 +192,8 @@ export class UsersComponent implements OnInit {
 
       let btnUpdateUser: Element = document.getElementById("btnUpdateUser");
       btnUpdateUser.setAttribute("disabled", "disabled");
+
+      this.getUserForms();
     }, 100);
   }
 
@@ -254,6 +291,8 @@ export class UsersComponent implements OnInit {
 
     let btnEditUser: Element = document.getElementById("btnEditUser");
     btnEditUser.setAttribute("disabled", "disabled");
+
+    this.isBtnUserFormButtonsDisabled = false;
   }
 
   public btnUpdateUser(): void {
@@ -294,6 +333,8 @@ export class UsersComponent implements OnInit {
             btnCloseUser.removeAttribute("disabled");
 
             this.getUsersData();
+
+            this.isBtnUserFormButtonsDisabled = true;
           } else if (data[0] == "failed") {
             this.toastr.error(data[1]);
 
@@ -302,12 +343,224 @@ export class UsersComponent implements OnInit {
             btnUpdateUser.innerHTML = "<i class='fa fa-check fa-fw'></i> Update";
             btnUpdateUser.removeAttribute("disabled");
             btnCloseUser.removeAttribute("disabled");
+            
+            this.isBtnUserFormButtonsDisabled = false;
           }
 
           if (this.updateUserSubscription != null) this.updateUserSubscription.unsubscribe();
         }
       );
     }
+  }
+
+  public cboUserFormShowNumberOfRowsOnSelectedIndexChanged(selectedValue: any): void {
+    this.userFormNumberOfPageIndex = selectedValue;
+
+    this.userFormCollectionView.pageSize = this.userFormNumberOfPageIndex;
+    this.userFormCollectionView.refresh();
+    this.userFormFlexGrid.refresh();
+  }
+
+  public getUserForms(): void {
+    this.userFormData = new ObservableArray();
+    this.userFormCollectionView = new CollectionView(this.userFormData);
+    this.userFormCollectionView.pageSize = 15;
+    this.userFormCollectionView.trackChanges = true;
+    this.userFormCollectionView.refresh();
+    this.userFormFlexGrid.refresh();
+
+    this.isUserFormProgressBarHidden = false;
+
+    this.usersService.getUserForms(this.listUsers[this.userIndex].Id);
+    this.getUserFormSubscription = this.usersService.getUserFormsObservable.subscribe(
+      data => {
+        if (data.length > 0) {
+          this.userFormData = data;
+          this.userFormCollectionView = new CollectionView(this.userFormData);
+          this.userFormCollectionView.pageSize = this.userFormNumberOfPageIndex;
+          this.userFormCollectionView.trackChanges = true;
+          this.userFormCollectionView.refresh();
+          this.userFormFlexGrid.refresh();
+        }
+
+        this.isUserFormProgressBarHidden = true;
+      }
+    );
+  }
+
+  public getForms(id: number) {
+    this.usersService.getForms();
+    this.getFormsSubscription = this.usersService.getFormsObservable.subscribe(
+      data => {
+        let formsObservableArray = new ObservableArray();
+
+        if (data.length > 0) {
+          for (var i = 0; i <= data.length - 1; i++) {
+            formsObservableArray.push({
+              Id: data[i].Id,
+              Form: data[i].Form,
+              Particulars: data[i].Particulars,
+            });
+          }
+        }
+
+        this.formData = formsObservableArray;
+
+        if (this.getFormsSubscription != null) this.getFormsSubscription.unsubscribe();
+      }
+    );
+  }
+
+  public btnAddUserFormOnclick(template: TemplateRef<any>): void {
+    this.newUserFormModalRef = this.modalService.show(template, { class: "" });
+    this.getForms(0);
+
+    this.userForm.Id = 0;
+    this.userForm.UserId = this.listUsers[this.userIndex].Id;
+    this.userForm.FormId = 0;
+    this.userForm.CanAdd = false;
+    this.userForm.CanEdit = false;
+    this.userForm.CanUpdate = false;
+    this.userForm.CanDelete = false;
+  }
+
+  public btnEditUserFormOnclick(template: TemplateRef<any>): void {
+    this.newUserFormModalRef = this.modalService.show(template, { class: "" });
+
+    let currentUserForm = this.userFormCollectionView.currentItem;
+    this.getForms(currentUserForm.Id);
+
+    this.userForm.Id = currentUserForm.Id;
+    this.userForm.UserId = this.listUsers[this.userIndex].Id;
+    this.userForm.FormId = currentUserForm.FormId;
+    this.userForm.CanAdd = currentUserForm.CanAdd;
+    this.userForm.CanEdit = currentUserForm.CanEdit;
+    this.userForm.CanUpdate = currentUserForm.CanUpdate;
+    this.userForm.CanDelete = currentUserForm.CanDelete;
+  }
+
+  public btnSaveUserFormOnclick(): void {
+    let objUserForm: any = {
+      Id: this.userForm.Id,
+      FormId: this.userForm.FormId,
+      UserId: this.userForm.UserId,
+      CanAdd: this.userForm.CanAdd,
+      CanEdit: this.userForm.CanEdit,
+      CanUpdate: this.userForm.CanUpdate,
+      CanDelete: this.userForm.CanDelete
+    };
+
+    if (this.userForm.Id == 0) {
+      let btnSaveUserForm: Element = document.getElementById("btnSaveUserForm");
+      btnSaveUserForm.innerHTML = "<i class='fa fa-save fa-fw'></i> Saving...";
+      btnSaveUserForm.setAttribute("disabled", "disabled");
+
+      let btnCloseUserFormModal: Element = document.getElementById("btnCloseUserFormModal");
+      btnCloseUserFormModal.setAttribute("disabled", "disabled");
+
+      this.usersService.saveUserForm(objUserForm);
+      this.saveUserFormSubscription = this.usersService.saveUserFormObservable.subscribe(
+        data => {
+          if (data[0] == "success") {
+            this.toastr.success('Save Successful!');
+
+            setTimeout(() => {
+              btnSaveUserForm.innerHTML = "<i class='fa fa-save fa-fw'></i> Save";
+              btnSaveUserForm.removeAttribute("disabled");
+              btnCloseUserFormModal.removeAttribute("disabled");
+            }, 500);
+
+            this.getUserForms();
+
+            this.newUserFormModalRef.hide();
+          } else if (data[0] == "failed") {
+            this.toastr.error(data[1]);
+
+            btnSaveUserForm.innerHTML = "<i class='fa fa-save fa-fw'></i> Save";
+            btnSaveUserForm.removeAttribute("disabled");
+            btnCloseUserFormModal.removeAttribute("disabled");
+          }
+
+          if (this.saveUserFormSubscription != null) this.saveUserFormSubscription.unsubscribe();
+        }
+      );
+    } else {
+      let btnSaveUserForm: Element = document.getElementById("btnSaveUserForm");
+      btnSaveUserForm.innerHTML = "<i class='fa fa-save fa-fw'></i> Saving...";
+      btnSaveUserForm.setAttribute("disabled", "disabled");
+
+      let btnCloseUserFormModal: Element = document.getElementById("btnCloseUserFormModal");
+      btnCloseUserFormModal.setAttribute("disabled", "disabled");
+
+      this.usersService.updateUserForm(objUserForm);
+      this.updateUserFormSubscription = this.usersService.updateUserFormObservable.subscribe(
+        data => {
+          if (data[0] == "success") {
+            this.toastr.success('Update Successful!');
+
+            setTimeout(() => {
+              btnSaveUserForm.innerHTML = "<i class='fa fa-save fa-fw'></i> Save";
+              btnSaveUserForm.removeAttribute("disabled");
+              btnCloseUserFormModal.removeAttribute("disabled");
+            }, 500);
+
+            this.getUserForms();
+
+            this.newUserFormModalRef.hide();
+          } else if (data[0] == "failed") {
+            this.toastr.error(data[1]);
+
+            btnSaveUserForm.innerHTML = "<i class='fa fa-save fa-fw'></i> Save";
+            btnSaveUserForm.removeAttribute("disabled");
+            btnCloseUserFormModal.removeAttribute("disabled");
+          }
+
+          if (this.updateUserFormSubscription != null) this.updateUserFormSubscription.unsubscribe();
+        }
+      );
+    }
+  }
+
+  public btnDeleteUserFormOnclick(template: TemplateRef<any>): void {
+    this.deleteUserFormModalRef = this.modalService.show(template, { class: "modal-sm" });
+  }
+
+  public btnConfirmDeleteUserFormOnclick(): void {
+    let btnConfirmDeleteUserForm: Element = document.getElementById("btnConfirmDeleteUserForm");
+    btnConfirmDeleteUserForm.innerHTML = "<i class='fa fa-trash fa-fw'></i> Deleting...";
+    btnConfirmDeleteUserForm.setAttribute("disabled", "disabled");
+
+    let btnConfirmDeleteUserFormCloseModal: Element = document.getElementById("btnConfirmDeleteUserFormCloseModal");
+    btnConfirmDeleteUserFormCloseModal.setAttribute("disabled", "disabled");
+
+    let currentUserForm = this.userFormCollectionView.currentItem;
+
+    this.usersService.deleteUserForm(currentUserForm.Id);
+    this.deleteUserFormSubscription = this.usersService.deleteUserFormObservable.subscribe(
+      data => {
+        if (data[0] == "success") {
+          this.toastr.success('Delete Successful!');
+
+          setTimeout(() => {
+            btnConfirmDeleteUserForm.innerHTML = "<i class='fa fa-trash fa-fw'></i> Delete";
+            btnConfirmDeleteUserForm.removeAttribute("disabled");
+            btnConfirmDeleteUserFormCloseModal.removeAttribute("disabled");
+          }, 500);
+
+          this.getUserForms();
+
+          this.deleteUserFormModalRef.hide();
+        } else if (data[0] == "failed") {
+          this.toastr.error(data[1]);
+
+          btnConfirmDeleteUserForm.innerHTML = "<i class='fa fa-trash fa-fw'></i> Delete";
+          btnConfirmDeleteUserForm.removeAttribute("disabled");
+          btnConfirmDeleteUserFormCloseModal.removeAttribute("disabled");
+        }
+
+        if (this.deleteUserFormSubscription != null) this.deleteUserFormSubscription.unsubscribe();
+      }
+    );
   }
 
   ngOnInit() {
@@ -319,5 +572,11 @@ export class UsersComponent implements OnInit {
     if (this.getUsersSubscription != null) this.getUsersSubscription.unsubscribe();
     if (this.registerUserSubscription != null) this.registerUserSubscription.unsubscribe();
     if (this.updateUserSubscription != null) this.updateUserSubscription.unsubscribe();
+
+    if (this.getUserFormSubscription != null) this.getUserFormSubscription.unsubscribe();
+    if (this.getFormsSubscription != null) this.getFormsSubscription.unsubscribe();
+    if (this.saveUserFormSubscription != null) this.saveUserFormSubscription.unsubscribe();
+    if (this.updateUserFormSubscription != null) this.updateUserFormSubscription.unsubscribe();
+    if (this.deleteUserFormSubscription != null) this.deleteUserFormSubscription.unsubscribe();
   }
 }

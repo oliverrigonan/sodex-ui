@@ -147,33 +147,74 @@
       <br />
 
       <mat-tab-group>
-        <mat-tab label="User Rights">
+        <mat-tab label="User Forms">
           <br />
 
           <div class="card card-default">
             <div class="card-header" align="right">
-              <button type="button" class="btn btn-primary">
-                <i class="fa fa-plus fa-fw"></i>Add
-              </button>
+              <table border="0" style="width: 100%; border: none;">
+                <tr>
+                  <td style="width: 80%;">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <b>Show</b>
+                        </div>
+                      </div>
+                      <wj-combo-box #cboUserFormNumberOfRows [itemsSource]="cboUserFormShowNumberOfRows" [isEditable]="false" [isRequired]="true"
+                        [displayMemberPath]="'rowString'" [selectedValuePath]="'rowNumber'" (selectedIndexChanged)="cboUserFormShowNumberOfRowsOnSelectedIndexChanged(cboUserFormNumberOfRows.selectedValue)"
+                        style="width: 180px;">
+                      </wj-combo-box>
+                    </div>
+                  </td>
+                  <td style="width: 20%;" align="right">
+                    <button type="button" class="btn btn-primary" [disabled]="isBtnUserFormButtonsDisabled" (click)="btnAddUserFormOnclick(newUserFormModalTemplate)">
+                      <i class="fa fa-plus fa-fw"></i>Add
+                    </button>
+                  </td>
+                </tr>
+              </table>
             </div>
             <div class="card-body">
-
+              <mat-progress-bar [hidden]="isUserFormProgressBarHidden" [color]="'primary'" [mode]="'indeterminate'"></mat-progress-bar>
+              <wj-flex-grid #userFormFlexGrid [itemsSource]="userFormCollectionView" [selectionMode]="3" [frozenColumns]="2">
+                <wj-flex-grid-filter></wj-flex-grid-filter>
+                <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [width]="95">
+                  <ng-template wjFlexGridCellTemplate [cellType]="'Cell'">
+                    <button type="button" class="btn btn-primary btn-block btn-xs" [disabled]="isBtnUserFormButtonsDisabled" (click)="btnEditUserFormOnclick(newUserFormModalTemplate)">
+                      <i class="fa fa-edit fa-fw"></i> Edit
+                    </button>
+                  </ng-template>
+                </wj-flex-grid-column>
+                <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="95">
+                  <ng-template wjFlexGridCellTemplate [cellType]="'Cell'">
+                    <button type="button" class="btn btn-danger btn-block btn-xs" [disabled]="isBtnUserFormButtonsDisabled" (click)="btnDeleteUserFormOnclick(deleteUserFormModalTemplate)">
+                      <i class="fa fa-trash fa-fw"></i> Delete
+                    </button>
+                  </ng-template>
+                </wj-flex-grid-column>
+                <wj-flex-grid-column [header]="'Form'" [binding]="'Form'" [isReadOnly]="true" [width]="'3*'"></wj-flex-grid-column>
+                <wj-flex-grid-column [header]="'Can Add'" [binding]="'CanAdd'" [isReadOnly]="true" [width]="'1*'"></wj-flex-grid-column>
+                <wj-flex-grid-column [header]="'Cann Edit'" [binding]="'CanEdit'" [isReadOnly]="true" [width]="'1*'"></wj-flex-grid-column>
+                <wj-flex-grid-column [header]="'Can Update'" [binding]="'CanUpdate'" [isReadOnly]="true" [width]="'1*'"></wj-flex-grid-column>
+                <wj-flex-grid-column [header]="'Can Delete'" [binding]="'CanDelete'" [isReadOnly]="true" [width]="'1*'"></wj-flex-grid-column>
+              </wj-flex-grid>
             </div>
             <div class="card-footer">
               <div class="col-sm-12 btn-group" style="padding: 5px 0px 5px 0px;">
-                <button type="button" class="btn btn-secondary" (click)="UserRightsCollectionView.moveToFirstPage()">
+                <button type="button" class="btn btn-secondary" (click)="userFormCollectionView.moveToFirstPage()">
                   <i class="fa fa-fast-backward"></i>
                 </button>
-                <button type="button" class="btn btn-secondary" (click)="UserRightsCollectionView.moveToPreviousPage()">
+                <button type="button" class="btn btn-secondary" (click)="userFormCollectionView.moveToPreviousPage()">
                   <i class="fa fa-step-backward"></i>
                 </button>
                 <button type="button" class="btn btn-secondary" disabled style="width:100px">
-                  <!-- {{ UserRightsCollectionView.pageIndex + 1 }} / {{ UserRightsCollectionView.pageCount }} -->
+                  {{ userFormCollectionView.pageIndex + 1 }} / {{ userFormCollectionView.pageCount }}
                 </button>
-                <button type="button" class="btn btn-secondary" (click)="UserRightsCollectionView.moveToNextPage()">
+                <button type="button" class="btn btn-secondary" (click)="userFormCollectionView.moveToNextPage()">
                   <i class="fa fa-step-forward"></i>
                 </button>
-                <button type="button" class="btn btn-secondary" (click)="UserRightsCollectionView.moveToLastPage()">
+                <button type="button" class="btn btn-secondary" (click)="userFormCollectionView.moveToLastPage()">
                   <i class="fa fa-fast-forward"></i>
                 </button>
               </div>
@@ -232,6 +273,58 @@
       <i class="fa fa-key fa-fw"></i> Register
     </button>
     <button type="button" class="btn btn-danger" id="btnCloseNewRegisterUserModal" (click)="newUserModalRef.hide()">
+      <i class="fa fa-close fa-fw"></i>Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #newUserFormModalTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title">
+      <i class="fa fa-unlock fa-fw"></i> New User Form</h4>
+  </div>
+  <div class="modal-body">
+    <div class="form-container">
+      <mat-form-field>
+        <mat-select placeholder="Form" [(ngModel)]="userForm.FormId">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let form of formData" [value]="form.Id">
+            {{ form.Particulars }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-checkbox color="primary" [(ngModel)]="userForm.CanAdd">Can Add</mat-checkbox>
+      <br />
+      <mat-checkbox color="primary" [(ngModel)]="userForm.CanEdit">Can Edit</mat-checkbox>
+      <br />
+      <mat-checkbox color="primary" [(ngModel)]="userForm.CanUpdate">Can Update</mat-checkbox>
+      <br />
+      <mat-checkbox color="primary" [(ngModel)]="userForm.CanDelete">Can Delete</mat-checkbox>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" style="margin-right: 5px;" id="btnSaveUserForm" (click)="btnSaveUserFormOnclick()">
+      <i class="fa fa-save fa-fw"></i>Save
+    </button>
+    <button type="button" class="btn btn-danger" id="btnCloseUserFormModal" (click)="newUserFormModalRef.hide()">
+      <i class="fa fa-close fa-fw"></i>Cancel
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #deleteUserFormModalTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title">
+      <i class="fa fa-trash fa-fw"></i> Delete</h4>
+  </div>
+  <div class="modal-body">
+    Are you sure you want to delete this user form?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" style="margin-right: 5px;" id="btnConfirmDeleteUserForm" (click)="btnConfirmDeleteUserFormOnclick()">
+      <i class="fa fa-trash fa-fw"></i>Delete
+    </button>
+    <button type="button" class="btn" id="btnConfirmDeleteUserFormCloseModal" (click)="deleteUserFormModalRef.hide()">
       <i class="fa fa-close fa-fw"></i>Cancel
     </button>
   </div>

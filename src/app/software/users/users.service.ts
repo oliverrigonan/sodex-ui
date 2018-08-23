@@ -29,6 +29,21 @@ export class UsersService {
   public updateUserSource = new Subject<string[]>();
   public updateUserObservable = this.updateUserSource.asObservable();
 
+  public getUserFormsSource = new Subject<ObservableArray>();
+  public getUserFormsObservable = this.getUserFormsSource.asObservable();
+
+  public getFormsSource = new Subject<ObservableArray>();
+  public getFormsObservable = this.getFormsSource.asObservable();
+
+  public saveUserFormSource = new Subject<string[]>();
+  public saveUserFormObservable = this.saveUserFormSource.asObservable();
+
+  public updateUserFormSource = new Subject<string[]>();
+  public updateUserFormObservable = this.updateUserFormSource.asObservable();
+
+  public deleteUserFormSource = new Subject<string[]>();
+  public deleteUserFormObservable = this.deleteUserFormSource.asObservable();
+
   public getUsers(): void {
     let usersObservableArray = new ObservableArray();
     this.getUsersSource.next(usersObservableArray);
@@ -83,6 +98,96 @@ export class UsersService {
       error => {
         let errorResults: string[] = ["failed", error.json()];
         this.updateUserSource.next(errorResults);
+      }
+    )
+  }
+
+  public getUserForms(userId: number): void {
+    let userFormsObservableArray = new ObservableArray();
+    this.getUserFormsSource.next(userFormsObservableArray);
+
+    this.http.get(this.defaultAPIURLHost + "/api/userForm/list/" + userId, this.options).subscribe(
+      response => {
+        var results = new ObservableArray(response.json());
+        if (results.length > 0) {
+          for (var i = 0; i <= results.length - 1; i++) {
+            userFormsObservableArray.push({
+              Id: results[i].Id,
+              UserId: results[i].UserId,
+              FormId: results[i].FormId,
+              Form: results[i].Form,
+              CanAdd: results[i].CanAdd,
+              CanEdit: results[i].CanEdit,
+              CanUpdate: results[i].CanUpdate,
+              CanDelete: results[i].CanDelete
+            });
+          }
+        }
+
+        this.getUserFormsSource.next(userFormsObservableArray);
+      }
+    );
+  }
+
+  public getForms(): void {
+    let formsObservableArray = new ObservableArray();
+    this.getFormsSource.next(formsObservableArray);
+
+    this.http.get(this.defaultAPIURLHost + "/api/userForm/forms/list", this.options).subscribe(
+      response => {
+        var results = new ObservableArray(response.json());
+        if (results.length > 0) {
+          for (var i = 0; i <= results.length - 1; i++) {
+            formsObservableArray.push({
+              Id: results[i].Id,
+              Form: results[i].Form,
+              Particulars: results[i].Particulars
+            });
+          }
+        }
+
+        this.getFormsSource.next(formsObservableArray);
+      }
+    );
+  }
+
+  public saveUserForm(objUserForm: any): void {
+    this.http.post(this.defaultAPIURLHost + "/api/userForm/add", JSON.stringify(objUserForm), this.options).subscribe(
+      response => {
+        let responseResults: string[] = ["success", ""];
+        this.saveUserFormSource.next(responseResults);
+      },
+      error => {
+        let errorResults: string[] = ["failed", error.json()];
+        this.saveUserFormSource.next(errorResults);
+      }
+    )
+  }
+
+  public updateUserForm(objUserForm: any): void {
+    let id = objUserForm.Id;
+
+    this.http.put(this.defaultAPIURLHost + "/api/userForm/update/" + id, JSON.stringify(objUserForm), this.options).subscribe(
+      response => {
+        let responseResults: string[] = ["success", ""];
+        this.updateUserFormSource.next(responseResults);
+      },
+      error => {
+        let errorResults: string[] = ["failed", error.json()];
+        this.updateUserFormSource.next(errorResults);
+      }
+    )
+  }
+
+  public deleteUserForm(id: number): void {
+    this.http.delete(this.defaultAPIURLHost + "/api/userForm/delete/" + id, this.options).subscribe(
+      response => {
+        let responseResults: string[] = ["success", ""];
+        this.deleteUserFormSource.next(responseResults);
+      },
+      error => {
+        let errorResults: string[] = ["failed", error.json()];
+        this.deleteUserFormSource.next(errorResults);
       }
     )
   }
