@@ -16,6 +16,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { CardsComponent } from './cards/cards.component';
 import { CheckBalanceComponent } from './check-balance/check-balance.component';
 import { UsersComponent } from './users/users.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 // ========
 // Services
@@ -25,6 +26,7 @@ import { ProfileService } from './profile/profile.service';
 import { TransferService } from './transfer/transfer.service';
 import { CheckBalanceService } from './check-balance/check-balance.service';
 import { UsersService } from './users/users.service';
+import { SoftwareUserFormsService } from './software.user.forms.service';
 
 // =======
 // Routing
@@ -112,7 +114,8 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     ReportsComponent,
     CardsComponent,
     CheckBalanceComponent,
-    UsersComponent
+    UsersComponent,
+    ForbiddenComponent
   ],
   providers: [
     SoftwareRouterActivate,
@@ -121,6 +124,7 @@ export const CustomCurrencyMaskConfig: CurrencyMaskConfig = {
     TransferService,
     CheckBalanceService,
     UsersService,
+    SoftwareUserFormsService,
     { provide: CURRENCY_MASK_CONFIG, useValue: CustomCurrencyMaskConfig }
   ]
 })

@@ -116,6 +116,7 @@ export class UsersService {
               UserId: results[i].UserId,
               FormId: results[i].FormId,
               Form: results[i].Form,
+              Particulars: results[i].Particulars,
               CanAdd: results[i].CanAdd,
               CanEdit: results[i].CanEdit,
               CanUpdate: results[i].CanUpdate,

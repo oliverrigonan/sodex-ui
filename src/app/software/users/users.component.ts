@@ -7,6 +7,8 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { ToastrService } from 'ngx-toastr';
 import { WjFlexGrid } from 'wijmo/wijmo.angular2.grid';
+import { SoftwareUserFormsService } from '../software.user.forms.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -18,6 +20,8 @@ export class UsersComponent implements OnInit {
     private usersService: UsersService,
     private modalService: BsModalService,
     private toastr: ToastrService,
+    private softwareUserFormsService: SoftwareUserFormsService,
+    private router: Router
   ) { }
 
   public showUserDetailTab: Boolean = false;
@@ -97,6 +101,8 @@ export class UsersComponent implements OnInit {
   }
 
   public isBtnUserFormButtonsDisabled: Boolean = true;
+
+  public getUserFormsSubscription: any;
 
   public createCboShowNumberOfRows(): void {
     for (var i = 0; i <= 4; i++) {
@@ -577,7 +583,18 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.createCboShowNumberOfRows();
-    this.getUsersData();
+    this.softwareUserFormsService.getCurrentForm("AdminUser");
+    this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
+      data => {
+        if (data != null) {
+          this.getUsersData();
+        } else {
+          this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
+        }
+
+        if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -590,5 +607,7 @@ export class UsersComponent implements OnInit {
     if (this.saveUserFormSubscription != null) this.saveUserFormSubscription.unsubscribe();
     if (this.updateUserFormSubscription != null) this.updateUserFormSubscription.unsubscribe();
     if (this.deleteUserFormSubscription != null) this.deleteUserFormSubscription.unsubscribe();
+
+    if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
   }
 }

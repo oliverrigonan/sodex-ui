@@ -7,6 +7,8 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { ToastrService } from 'ngx-toastr';
 import { WjFlexGrid } from 'wijmo/wijmo.angular2.grid';
+import { SoftwareUserFormsService } from '../software.user.forms.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cards',
@@ -18,6 +20,8 @@ export class CardsComponent implements OnInit {
     private cardsService: CardsService,
     private modalService: BsModalService,
     private toastr: ToastrService,
+    private softwareUserFormsService: SoftwareUserFormsService,
+    private router: Router
   ) { }
 
   public detailTabs = [];
@@ -69,6 +73,8 @@ export class CardsComponent implements OnInit {
   public cboShowNumberOfRows: ObservableArray = new ObservableArray();
 
   @ViewChild('cardsFlexGrid') cardsFlexGrid: WjFlexGrid;
+
+  public getUserFormsSubscription: any;
 
   public createCboShowNumberOfRows(): void {
     for (var i = 0; i <= 4; i++) {
@@ -380,7 +386,19 @@ export class CardsComponent implements OnInit {
 
   ngOnInit() {
     this.createCboShowNumberOfRows();
-    this.getCardsData();
+
+    this.softwareUserFormsService.getCurrentForm("SetupCard");
+    this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
+      data => {
+        if (data != null) {
+          this.getCardsData();
+        } else {
+          this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
+        }
+
+        if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -388,5 +406,6 @@ export class CardsComponent implements OnInit {
     if (this.saveCardSubscription != null) this.saveCardSubscription.unsubscribe();
     if (this.updateCardSubscription != null) this.updateCardSubscription.unsubscribe();
     if (this.deleteCardSubscription != null) this.deleteCardSubscription.unsubscribe();
+    if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
   }
 }

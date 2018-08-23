@@ -35,6 +35,9 @@ export class SoftwareComponent implements OnInit {
       } else if (router.url == "/software/checkbalance") {
         this.ToolbarTitle = "Check Balance";
         toolBarImage.setAttribute("src", "../../assets/images/icons/check-balance.png");
+      } else if (router.url == "/software/forbidden") {
+        this.ToolbarTitle = "Forbidden";
+        toolBarImage.setAttribute("src", "../../assets/images/icons/forbidden.png");
       } else {
         this.ToolbarTitle = "Sodex";
       }
@@ -65,7 +68,7 @@ export class SoftwareComponent implements OnInit {
 
   ngOnInit() {
     this.openDrawer();
-    
+
     if (localStorage.getItem("access_token") != null) {
       this.currentUser = localStorage.getItem("username");
       this.isUserLoggedIn = true;

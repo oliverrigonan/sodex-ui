@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from './profile.service';
 import { ToastrService } from 'ngx-toastr';
+import { SoftwareUserFormsService } from '../software.user.forms.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +12,9 @@ import { ToastrService } from 'ngx-toastr';
 export class ProfileComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private softwareUserFormsService: SoftwareUserFormsService,
+    private router: Router
   ) { }
 
   public getProfileSubscription: any;
@@ -27,6 +31,8 @@ export class ProfileComponent implements OnInit {
   };
 
   public isProfileDisabled: Boolean = true;
+
+  public getUserFormsSubscription: any;
 
   public getProfileData(): void {
     let btnUpdateProfile: Element = document.getElementById("btnUpdateProfile");
@@ -97,11 +103,23 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getProfileData();
+    this.softwareUserFormsService.getCurrentForm("SetupProfile");
+    this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
+      data => {
+        if (data != null) {
+          this.getProfileData();
+        } else {
+          this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
+        }
+
+        if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
+      }
+    );
   }
 
   ngOnDestroy() {
     if (this.getProfileSubscription != null) this.getProfileSubscription.unsubscribe();
     if (this.updateProfileSubscription != null) this.updateProfileSubscription.unsubscribe();
+    if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
   }
 }

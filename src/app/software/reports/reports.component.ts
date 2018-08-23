@@ -4,6 +4,8 @@ import { ToastrService } from 'ngx-toastr';
 import { ObservableArray, CollectionView } from 'wijmo/wijmo';
 import { WjFlexGrid } from 'wijmo/wijmo.angular2.grid';
 import { Angular5Csv } from 'angular5-csv/Angular5-csv';
+import { SoftwareUserFormsService } from '../software.user.forms.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reports',
@@ -13,7 +15,9 @@ import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 export class ReportsComponent implements OnInit {
   constructor(
     private reportsService: ReportsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private softwareUserFormsService: SoftwareUserFormsService,
+    private router: Router
   ) { }
 
   public cardNumber: string;
@@ -37,6 +41,8 @@ export class ReportsComponent implements OnInit {
   public isBtnGenerateDisabled: Boolean = true;
 
   public cboShowNumberOfRows: ObservableArray = new ObservableArray();
+
+  public getUserFormsSubscription: any;
 
   public createCboShowNumberOfRows(): void {
     for (var i = 0; i <= 4; i++) {
@@ -194,9 +200,22 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
     this.createCboShowNumberOfRows();
+    this.softwareUserFormsService.getCurrentForm("ReportLedger");
+    this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
+      data => {
+        if (data != null) {
+
+        } else {
+          this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
+        }
+
+        if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
+      }
+    );
   }
 
   ngOnDestroy() {
     if (this.getLedgersSubscription != null) this.getLedgersSubscription.unsubscribe();
+    if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
   }
 }

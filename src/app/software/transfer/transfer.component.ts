@@ -3,6 +3,8 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { TransferService } from './transfer.service';
 import { ToastrService } from 'ngx-toastr';
+import { SoftwareUserFormsService } from '../software.user.forms.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-transfer',
@@ -13,7 +15,9 @@ export class TransferComponent implements OnInit {
   constructor(
     private modalService: BsModalService,
     private transferService: TransferService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private softwareUserFormsService: SoftwareUserFormsService,
+    private router: Router
   ) { }
 
   public modalRef: BsModalRef;
@@ -40,6 +44,8 @@ export class TransferComponent implements OnInit {
     Particulars: "",
     Status: ""
   };
+
+  public getUserFormsSubscription: any;
 
   public openTransferModal(template: TemplateRef<any>): void {
     if (this.card.CardNumber != "") {
@@ -153,13 +159,24 @@ export class TransferComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isCardDetailLoaded = false;
+    this.softwareUserFormsService.getCurrentForm("TransactionTransfer");
+    this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
+      data => {
+        if (data != null) {
+          this.isCardDetailLoaded = false;
+        } else {
+          this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
+        }
 
+        if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
+      }
+    );
   }
 
   ngOnDestroy() {
     if (this.getMotherCardBalanceSubscription != null) this.getMotherCardBalanceSubscription.unsubscribe();
     if (this.getCardSubscription != null) this.getCardSubscription.unsubscribe();
     if (this.transferAmountSubscription != null) this.transferAmountSubscription.unsubscribe();
+    if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
   }
 }

@@ -16,6 +16,7 @@ import { ReportsComponent } from './reports/reports.component';
 import { CardsComponent } from './cards/cards.component';
 import { CheckBalanceComponent } from './check-balance/check-balance.component';
 import { UsersComponent } from './users/users.component';
+import { ForbiddenComponent } from './forbidden/forbidden.component';
 
 // ==============
 // Custom Classes
@@ -36,7 +37,8 @@ const routes: Routes = [
       { path: 'reports', component: ReportsComponent, canActivate: [SoftwareRouterActivate] },
       { path: 'cards', component: CardsComponent, canActivate: [SoftwareRouterActivate] },
       { path: 'checkbalance', component: CheckBalanceComponent, canActivate: [SoftwareRouterActivate] },
-      { path: 'users', component: UsersComponent, canActivate: [SoftwareRouterActivate] }
+      { path: 'users', component: UsersComponent, canActivate: [SoftwareRouterActivate] },
+      { path: 'forbidden', component: ForbiddenComponent, canActivate: [SoftwareRouterActivate] }
     ]
   },
 ];

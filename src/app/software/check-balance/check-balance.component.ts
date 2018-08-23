@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CheckBalanceService } from './check-balance.service';
 import { ToastrService } from 'ngx-toastr';
+import { SoftwareUserFormsService } from '../software.user.forms.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-check-balance',
@@ -10,7 +12,9 @@ import { ToastrService } from 'ngx-toastr';
 export class CheckBalanceComponent implements OnInit {
   constructor(
     private checkBalanceService: CheckBalanceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private softwareUserFormsService: SoftwareUserFormsService,
+    private router: Router
   ) { }
 
   public getCardSubscription: any;
@@ -27,6 +31,8 @@ export class CheckBalanceComponent implements OnInit {
     Particulars: "",
     Status: ""
   };
+
+  public getUserFormsSubscription: any;
 
   public btnLoadCardDetailsOnclick(): void {
     if (this.card.CardNumber != "") {
@@ -68,10 +74,22 @@ export class CheckBalanceComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.softwareUserFormsService.getCurrentForm("TransactionCheckBalance");
+    this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
+      data => {
+        if (data != null) {
+          
+        } else {
+          this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
+        }
 
+        if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
+      }
+    );
   }
 
   ngOnDestroy() {
     if (this.getCardSubscription != null) this.getCardSubscription.unsubscribe();
+    if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
   }
 }
