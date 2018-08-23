@@ -50,6 +50,7 @@ export class UsersComponent implements OnInit {
     MotherCardNumber: "",
     MotherCardBalance: "",
     Status: "",
+    UserFormsList: new ObservableArray()
   }];
 
   public getUsersSubscription: any;
@@ -225,8 +226,10 @@ export class UsersComponent implements OnInit {
       let currentUserIndex = this.listUsers.indexOf(this.listUsers.filter(card => card.TabNumber === this.selectedTab.value)[0]);
       this.userIndex = currentUserIndex;
 
-      this.getUserForms();
-
+      this.userFormData = this.listUsers[this.userIndex].UserFormsList;
+      this.userFormCollectionView = new CollectionView(this.userFormData);
+      this.userFormCollectionView.pageSize = this.userFormNumberOfPageIndex;
+      this.userFormCollectionView.trackChanges = true;
       this.userFormCollectionView.refresh();
       this.userFormFlexGrid.refresh();
     } else {
@@ -386,6 +389,8 @@ export class UsersComponent implements OnInit {
           this.userFormCollectionView.trackChanges = true;
           this.userFormCollectionView.refresh();
           this.userFormFlexGrid.refresh();
+
+          this.listUsers[this.userIndex].UserFormsList = data;
         }
 
         this.isUserFormProgressBarHidden = true;
