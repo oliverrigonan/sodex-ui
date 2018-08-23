@@ -224,6 +224,11 @@ export class UsersComponent implements OnInit {
     if (event.index > 0) {
       let currentUserIndex = this.listUsers.indexOf(this.listUsers.filter(card => card.TabNumber === this.selectedTab.value)[0]);
       this.userIndex = currentUserIndex;
+
+      this.getUserForms();
+
+      this.userFormCollectionView.refresh();
+      this.userFormFlexGrid.refresh();
     } else {
       if (event.index == 0) {
         this.usersCollectionView.refresh();
@@ -343,7 +348,7 @@ export class UsersComponent implements OnInit {
             btnUpdateUser.innerHTML = "<i class='fa fa-check fa-fw'></i> Update";
             btnUpdateUser.removeAttribute("disabled");
             btnCloseUser.removeAttribute("disabled");
-            
+
             this.isBtnUserFormButtonsDisabled = false;
           }
 
@@ -384,6 +389,8 @@ export class UsersComponent implements OnInit {
         }
 
         this.isUserFormProgressBarHidden = true;
+
+        if (this.getUserFormSubscription != null) this.getUserFormSubscription.unsubscribe();
       }
     );
   }
