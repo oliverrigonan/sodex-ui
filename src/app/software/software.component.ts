@@ -63,7 +63,7 @@ export class SoftwareComponent implements OnInit {
     this.currentUser = "Login";;
     this.isUserLoggedIn = false;
 
-    this.router.navigate(["/login"]);
+    location.reload();
   }
 
   ngOnInit() {

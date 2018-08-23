@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
     this.currentUser = "Login";;
     this.isUserLoggedIn = false;
     
-    this.router.navigate(["/home"]);
+    location.reload();
   }
 
   ngOnInit() {
