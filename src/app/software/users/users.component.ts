@@ -287,7 +287,9 @@ export class UsersComponent implements OnInit {
 
           this.newUserModalRef.hide();
         } else if (data[0] == "failed") {
-          this.toastr.error(data[1]);
+          for (let i = 1; i < data.length; i++) {
+            this.toastr.error(data[i]);
+          }
 
           btnRegisterUser.innerHTML = "<i class='fa fa-key fa-fw'></i> Register";
           btnRegisterUser.removeAttribute("disabled");

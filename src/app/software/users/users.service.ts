@@ -81,7 +81,50 @@ export class UsersService {
         this.registerUserSource.next(responseResults);
       },
       error => {
-        let errorResults: string[] = ["failed", error.json()];
+        let errorResults: string[] = ["failed"];
+
+        let fullnameErrors = error.json().ModelState["model.FullName"];
+        if (fullnameErrors.length > 0) {
+          for (let i = 0; i < fullnameErrors.length; i++) {
+            errorResults.push(fullnameErrors[i]);
+          }
+        }
+        
+        let addressErrors = error.json().ModelState["model.Address"];
+        if (addressErrors.length > 0) {
+          for (let i = 0; i < addressErrors.length; i++) {
+            errorResults.push(addressErrors[i]);
+          }
+        }
+
+        let contactNumberErrors = error.json().ModelState["model.ContactNumber"];
+        if (contactNumberErrors.length > 0) {
+          for (let i = 0; i < contactNumberErrors.length; i++) {
+            errorResults.push(contactNumberErrors[i]);
+          }
+        }
+
+        let emailErrors = error.json().ModelState["model.Email"];
+        if (emailErrors.length > 0) {
+          for (let i = 0; i < emailErrors.length; i++) {
+            errorResults.push(emailErrors[i]);
+          }
+        }
+
+        let passwordErrors = error.json().ModelState["model.Password"];
+        if (passwordErrors.length > 0) {
+          for (let i = 0; i < passwordErrors.length; i++) {
+            errorResults.push(passwordErrors[i]);
+          }
+        }
+        
+        let usernameErrors = error.json().ModelState["model.UserName"];
+        if (usernameErrors.length > 0) {
+          for (let i = 0; i < usernameErrors.length; i++) {
+            errorResults.push(usernameErrors[i]);
+          }
+        }
+
         this.registerUserSource.next(errorResults);
       }
     )
