@@ -27,7 +27,7 @@ export class ReportsService {
     let ledgersObservableArray = new ObservableArray();
     this.getLedgerSource.next(ledgersObservableArray);
 
-    this.http.get(this.defaultAPIURLHost + "/api/ledger/list/" + cardNumber + "/" + dateStart + "/" + dateEnd, this.options).subscribe(
+    this.http.get(this.defaultAPIURLHost + "/api/reportLedger/list/" + cardNumber + "/" + dateStart + "/" + dateEnd, this.options).subscribe(
       response => {
         var results = new ObservableArray(response.json());
         if (results.length > 0) {
