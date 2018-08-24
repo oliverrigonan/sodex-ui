@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { TransferService } from './transfer.service';
@@ -49,6 +49,8 @@ export class TransferComponent implements OnInit {
   public isLoadingSpinnerHidden: boolean = false;
   public isContentHidden: boolean = true;
 
+  @ViewChild('trasnferModalTemplate') trasnferModalTemplate: TemplateRef<any>;
+
   public openTransferModal(template: TemplateRef<any>): void {
     if (this.card.CardNumber != "") {
       this.amountToBeTransfered = 0;
@@ -76,7 +78,6 @@ export class TransferComponent implements OnInit {
       this.getCardSubscription = this.transferService.getCardObservable.subscribe(
         data => {
           if (data != null) {
-            this.card.CardNumber = data.CardNumber;
             this.card.FullName = data.FullName;
             this.card.Address = data.Address;
             this.card.Email = data.Email;
@@ -90,10 +91,11 @@ export class TransferComponent implements OnInit {
 
             this.isCardDetailLoaded = true;
             this.isBtnTransferDisable = false;
+
+            this.openTransferModal(this.trasnferModalTemplate);
           } else {
             this.toastr.error("No card details for this card number.");
 
-            this.card.CardNumber = this.card.CardNumber;
             this.card.FullName = "";
             this.card.Address = "";
             this.card.Email = "";
@@ -158,6 +160,10 @@ export class TransferComponent implements OnInit {
 
   public onCardNumberKeyPress(event: any) {
     this.isBtnTransferDisable = true;
+
+    if (event.key == "Enter") {
+      this.btnLoadCardDetailsOnclick();
+    }
   }
 
   ngOnInit() {

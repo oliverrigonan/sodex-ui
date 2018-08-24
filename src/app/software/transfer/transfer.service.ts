@@ -45,7 +45,6 @@ export class TransferService {
   public getCardDetails(cardNumber: string): void {
     let cardDetail = {
       Id: 0,
-      CardNumber: "",
       FullName: "",
       Address: "",
       Email: "",
@@ -61,7 +60,6 @@ export class TransferService {
       response => {
         var results = response.json();
         if (results != null) {
-          cardDetail.CardNumber = results.CardNumber;
           cardDetail.FullName = results.FullName;
           cardDetail.Address = results.Address;
           cardDetail.Email = results.Email;

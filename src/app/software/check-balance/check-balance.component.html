@@ -23,8 +23,8 @@
             <div class="row">
               <div class="col-md-10">
                 <mat-form-field style="width: 100%;">
-                  <input matInput placeholder="Card Number" [(ngModel)]="card.CardNumber" autocomplete="off" autocorrect="off" autocapitalize="off"
-                    spellcheck="false">
+                  <input matInput placeholder="Card Number" type="password" (keyup)="onCardNumberKeyPress($event)" [(ngModel)]="card.CardNumber" autocomplete="off"
+                    autocorrect="off" autocapitalize="off" spellcheck="false">
                 </mat-form-field>
               </div>
               <div class="col-md-2" align="right">

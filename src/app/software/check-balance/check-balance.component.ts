@@ -42,7 +42,6 @@ export class CheckBalanceComponent implements OnInit {
       this.getCardSubscription = this.checkBalanceService.getCardObservable.subscribe(
         data => {
           if (data != null) {
-            this.card.CardNumber = data.CardNumber;
             this.card.FullName = data.FullName;
             this.card.Address = data.Address;
             this.card.Email = data.Email;
@@ -56,7 +55,6 @@ export class CheckBalanceComponent implements OnInit {
           } else {
             this.toastr.error("No card details for this card number.");
 
-            this.card.CardNumber = this.card.CardNumber;
             this.card.FullName = "";
             this.card.Address = "";
             this.card.Email = "";
@@ -72,6 +70,12 @@ export class CheckBalanceComponent implements OnInit {
       );
     } else {
       this.toastr.error("Please provide a card number.");
+    }
+  }
+
+  public onCardNumberKeyPress(event: any) {
+    if (event.key == "Enter") {
+      this.btnLoadCardDetailsOnclick();
     }
   }
 

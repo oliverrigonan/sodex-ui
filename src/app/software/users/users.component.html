@@ -129,7 +129,7 @@
               <div class="col">
                 <div class="form-container">
                   <mat-form-field>
-                    <input matInput placeholder="Mother Card Number" disabled [(ngModel)]="listUsers[userIndex].MotherCardNumber" autocomplete="off"
+                    <input matInput type="password" placeholder="Mother Card Number" [disabled]="isUserFieldDisabled" [(ngModel)]="listUsers[userIndex].MotherCardNumber" autocomplete="off"
                       autocorrect="off" autocapitalize="off" spellcheck="false">
                   </mat-form-field>
                   <mat-form-field>

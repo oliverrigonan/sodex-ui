@@ -78,6 +78,8 @@ export class CardsComponent implements OnInit {
   public isLoadingSpinnerHidden: boolean = false;
   public isContentHidden: boolean = true;
 
+  public totalBalanceAmount: number = 0;
+
   public createCboShowNumberOfRows(): void {
     for (var i = 0; i <= 4; i++) {
       var rows = 0;
@@ -135,6 +137,18 @@ export class CardsComponent implements OnInit {
           this.cardsCollectionView.trackChanges = true;
           this.cardsCollectionView.refresh();
           this.cardsFlexGrid.refresh();
+
+          for (let p = 1; p <= this.cardsCollectionView.pageCount; p++) {
+            for (let i = 0; i < this.cardsCollectionView.items.length; i++) {
+              this.totalBalanceAmount += this.cardsCollectionView.items[i].Balance;
+            }
+
+            if (p == this.cardsCollectionView.pageCount) {
+              this.cardsCollectionView.moveToFirstPage();
+            } else {
+              this.cardsCollectionView.moveToNextPage();
+            }
+          }
         }
 
         this.isProgressBarHidden = true;
@@ -206,7 +220,7 @@ export class CardsComponent implements OnInit {
   public btnOpenCard(): void {
     let currentCard = this.cardsCollectionView.currentItem;
 
-    this.detailTabs.push(currentCard.CardNumber);
+    this.detailTabs.push(currentCard.FullName);
     this.selectedTab.setValue(this.detailTabs.length);
 
     this.listCards.push({

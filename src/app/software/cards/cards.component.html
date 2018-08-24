@@ -90,6 +90,26 @@
         </div>
 
         <br />
+
+        <div class="card card-default">
+          <div class="card-body">
+            <br />
+            <div class="row">
+              <div class="col-md-7">
+              </div>
+              <div class="col-md-5">
+                <div class="form-container">
+                  <mat-form-field>
+                    <input matInput currencyMask placeholder="Total Balance" [(ngModel)]="totalBalanceAmount" disabled autocomplete="off" autocorrect="off"
+                      autocapitalize="off" spellcheck="false" value="0.00" style="text-align: right;">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br />
       </mat-tab>
 
       <mat-tab *ngFor="let detailTab of detailTabs; let index = index" [label]="detailTab">
@@ -112,8 +132,8 @@
               <div class="col">
                 <div class="form-container">
                   <mat-form-field>
-                    <input matInput placeholder="Card Number" [disabled]="isCardFieldDisabled" [(ngModel)]="listCards[cardIndex].CardNumber"
-                      autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                    <input matInput placeholder="Card Number" disabled [(ngModel)]="listCards[cardIndex].CardNumber" autocomplete="off" autocorrect="off"
+                      autocapitalize="off" spellcheck="false">
                   </mat-form-field>
                   <mat-form-field>
                     <input matInput placeholder="Name" [disabled]="isCardFieldDisabled" [(ngModel)]="listCards[cardIndex].FullName" autocomplete="off"

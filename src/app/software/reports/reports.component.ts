@@ -159,6 +159,9 @@ export class ReportsComponent implements OnInit {
   public onCardNumberKeyPress(event: any) {
     if (this.cardNumber != "") {
       this.isBtnGenerateDisabled = false;
+      if (event.key == "Enter") {
+        this.btnGenerateLedgerOnclick();
+      }
     } else {
       this.isBtnGenerateDisabled = true;
     }
