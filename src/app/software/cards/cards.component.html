@@ -54,13 +54,13 @@
                   </button>
                 </ng-template>
               </wj-flex-grid-column>
-              <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="95">
+              <!-- <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="95">
                 <ng-template wjFlexGridCellTemplate [cellType]="'Cell'">
                   <button type="button" class="btn btn-danger btn-block btn-xs" (click)="btnDeleteCardOnclick(deleteCardModalTemplate)">
                     <i class="fa fa-trash fa-fw"></i> Delete
                   </button>
                 </ng-template>
-              </wj-flex-grid-column>
+              </wj-flex-grid-column> -->
               <wj-flex-grid-column [header]="'Card No.'" [binding]="'CardNumber'" [isReadOnly]="true" [width]="'1.5*'"></wj-flex-grid-column>
               <wj-flex-grid-column [header]="'Name'" [binding]="'FullName'" [isReadOnly]="true" [width]="'2*'"></wj-flex-grid-column>
               <wj-flex-grid-column [header]="'Balance'" [binding]="'BalanceDisplay'" [isReadOnly]="true" [width]="'2*'" [align]="'right'"></wj-flex-grid-column>
