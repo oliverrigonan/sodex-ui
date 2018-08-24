@@ -103,6 +103,8 @@ export class UsersComponent implements OnInit {
   public isBtnUserFormButtonsDisabled: Boolean = true;
 
   public getUserFormsSubscription: any;
+  public isLoadingSpinnerHidden: boolean = false;
+  public isContentHidden: boolean = true;
 
   public createCboShowNumberOfRows(): void {
     for (var i = 0; i <= 4; i++) {
@@ -583,18 +585,23 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
     this.createCboShowNumberOfRows();
-    this.softwareUserFormsService.getCurrentForm("AdminUser");
-    this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
-      data => {
-        if (data != null) {
-          this.getUsersData();
-        } else {
-          this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
-        }
+    setTimeout(() => {
+      this.softwareUserFormsService.getCurrentForm("AdminUser");
+      this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
+        data => {
+          if (data != null) {
+            this.isLoadingSpinnerHidden = true;
+            this.isContentHidden = false;
 
-        if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
-      }
-    );
+            this.getUsersData();
+          } else {
+            this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
+          }
+
+          if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
+        }
+      );
+    }, 1000);
   }
 
   ngOnDestroy() {

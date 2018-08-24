@@ -43,6 +43,8 @@ export class ReportsComponent implements OnInit {
   public cboShowNumberOfRows: ObservableArray = new ObservableArray();
 
   public getUserFormsSubscription: any;
+  public isLoadingSpinnerHidden: boolean = false;
+  public isContentHidden: boolean = true;
 
   public createCboShowNumberOfRows(): void {
     for (var i = 0; i <= 4; i++) {
@@ -200,18 +202,21 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
     this.createCboShowNumberOfRows();
-    this.softwareUserFormsService.getCurrentForm("ReportLedger");
-    this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
-      data => {
-        if (data != null) {
+    setTimeout(() => {
+      this.softwareUserFormsService.getCurrentForm("ReportLedger");
+      this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
+        data => {
+          if (data != null) {
+            this.isLoadingSpinnerHidden = true;
+            this.isContentHidden = false;
+          } else {
+            this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
+          }
 
-        } else {
-          this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
+          if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
         }
-
-        if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
-      }
-    );
+      );
+    }, 1000);
   }
 
   ngOnDestroy() {

@@ -46,6 +46,8 @@ export class TransferComponent implements OnInit {
   };
 
   public getUserFormsSubscription: any;
+  public isLoadingSpinnerHidden: boolean = false;
+  public isContentHidden: boolean = true;
 
   public openTransferModal(template: TemplateRef<any>): void {
     if (this.card.CardNumber != "") {
@@ -159,18 +161,23 @@ export class TransferComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.softwareUserFormsService.getCurrentForm("TransactionTransfer");
-    this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
-      data => {
-        if (data != null) {
-          this.isCardDetailLoaded = false;
-        } else {
-          this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
-        }
+    setTimeout(() => {
+      this.softwareUserFormsService.getCurrentForm("TransactionTransfer");
+      this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
+        data => {
+          if (data != null) {
+            this.isLoadingSpinnerHidden = true;
+            this.isContentHidden = false;
 
-        if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
-      }
-    );
+            this.isCardDetailLoaded = false;
+          } else {
+            this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
+          }
+
+          if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
+        }
+      );
+    }, 1000);
   }
 
   ngOnDestroy() {

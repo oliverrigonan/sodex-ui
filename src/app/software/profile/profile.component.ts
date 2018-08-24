@@ -33,6 +33,8 @@ export class ProfileComponent implements OnInit {
   public isProfileDisabled: Boolean = true;
 
   public getUserFormsSubscription: any;
+  public isLoadingSpinnerHidden: boolean = false;
+  public isContentHidden: boolean = true;
 
   public getProfileData(): void {
     let btnUpdateProfile: Element = document.getElementById("btnUpdateProfile");
@@ -103,18 +105,22 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.softwareUserFormsService.getCurrentForm("SetupProfile");
-    this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
-      data => {
-        if (data != null) {
-          this.getProfileData();
-        } else {
-          this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
-        }
+    setTimeout(() => {
+      this.softwareUserFormsService.getCurrentForm("SetupProfile");
+      this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
+        data => {
+          if (data != null) {
+            this.isLoadingSpinnerHidden = true;
+            this.isContentHidden = false;
+            this.getProfileData();
+          } else {
+            this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
+          }
 
-        if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
-      }
-    );
+          if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
+        }
+      );
+    }, 1000)
   }
 
   ngOnDestroy() {

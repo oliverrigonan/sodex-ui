@@ -33,6 +33,8 @@ export class CheckBalanceComponent implements OnInit {
   };
 
   public getUserFormsSubscription: any;
+  public isLoadingSpinnerHidden: boolean = false;
+  public isContentHidden: boolean = true;
 
   public btnLoadCardDetailsOnclick(): void {
     if (this.card.CardNumber != "") {
@@ -74,18 +76,21 @@ export class CheckBalanceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.softwareUserFormsService.getCurrentForm("TransactionCheckBalance");
-    this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
-      data => {
-        if (data != null) {
-          
-        } else {
-          this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
-        }
+    setTimeout(() => {
+      this.softwareUserFormsService.getCurrentForm("TransactionCheckBalance");
+      this.getUserFormsSubscription = this.softwareUserFormsService.getCurrentUserFormsObservable.subscribe(
+        data => {
+          if (data != null) {
+            this.isLoadingSpinnerHidden = true;
+            this.isContentHidden = false;
+          } else {
+            this.router.navigateByUrl("/software/forbidden", { skipLocationChange: true });
+          }
 
-        if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
-      }
-    );
+          if (this.getUserFormsSubscription != null) this.getUserFormsSubscription.unsubscribe();
+        }
+      );
+    }, 1000);
   }
 
   ngOnDestroy() {
